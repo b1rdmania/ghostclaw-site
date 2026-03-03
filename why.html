@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why GhostClaw</title>
+<meta name="description" content="OpenClaw is beautiful but broken. NanoClaw is elegant but caged. GhostClaw is the middle ground.">
+<meta name="theme-color" content="#0e0e1a">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --bg-deep:#0e0e1a;
+    --bg-surface:#1b1b2b;
+    --bg-elevated:#26263a;
+    --bg-hover:#32324a;
+    --text-primary:#f0f0f0;
+    --text-secondary:#a0a0b8;
+    --text-muted:#6a6a82;
+    --claw-green:#22c55e;
+    --claw-green-light:#4ade80;
+    --border:#2a2a3e;
+    --border-light:#3a3a52;
+    --font:'Fredoka',sans-serif;
+    --chaos:'Comic Sans MS','Comic Sans',cursive;
+    --radius-lg:20px;
+    --radius-full:9999px;
+  }
+
+  html{scroll-behavior:smooth;background:#0e0e1a}
+  body{
+    background:var(--bg-deep);
+    color:var(--text-primary);
+    font-family:var(--font);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:clip;
+    padding:24px;
+  }
+
+  /* === NAV === */
+  .nav-back{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:14px;
+    font-weight:500;
+    color:var(--text-secondary);
+    text-decoration:none;
+    margin-bottom:24px;
+    transition:color 0.15s;
+  }
+  .nav-back:hover{color:var(--text-primary)}
+  .nav-back svg{width:16px;height:16px;fill:currentColor}
+
+  /* === COMIC PAGE === */
+  .comic{
+    max-width:800px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+
+  /* === PANELS === */
+  .panel{
+    border:3px solid var(--border-light);
+    padding:40px 36px;
+    position:relative;
+    overflow:hidden;
+  }
+  .panel + .panel{border-top:none}
+  .panel--surface{background:var(--bg-surface)}
+  .panel--deep{background:var(--bg-deep)}
+  .panel--elevated{background:var(--bg-elevated)}
+  .panel--tilt-cw{transform:rotate(0.3deg)}
+  .panel--tilt-ccw{transform:rotate(-0.4deg)}
+
+  /* === SPLASH === */
+  .splash{
+    text-align:center;
+    padding:56px 36px;
+    background:var(--bg-surface);
+    border:4px solid var(--border-light);
+  }
+  .splash img{width:100px;height:100px;margin-bottom:16px}
+  .splash h1{
+    font-size:clamp(2.5rem,7vw,4.5rem);
+    font-weight:700;
+    line-height:1;
+    margin-bottom:8px;
+  }
+  .splash h1 span{color:var(--claw-green)}
+  .splash .sub{
+    font-family:var(--chaos);
+    font-size:14px;
+    color:var(--text-muted);
+  }
+
+  /* === GRID PANELS === */
+  .panel-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+  }
+  .panel-grid .panel{min-height:200px}
+  .panel-grid .panel--wide{grid-column:1 / -1}
+
+  /* === NARRATION (yellow-green caption boxes) === */
+  .narration{
+    font-family:var(--font);
+    font-weight:700;
+    font-size:clamp(0.9rem,2vw,1.1rem);
+    color:var(--claw-green-light);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:16px;
+  }
+
+  /* === BODY COPY === */
+  .panel p{
+    font-size:15px;
+    color:var(--text-secondary);
+    line-height:1.7;
+    max-width:680px;
+  }
+  .panel p + p{margin-top:12px}
+  .panel p strong{color:var(--text-primary);font-weight:600}
+  .panel p em{font-style:italic;color:var(--text-muted)}
+
+  /* === CHAOS TEXT === */
+  .chaos{
+    font-family:var(--chaos);
+    font-size:13px;
+    color:var(--text-muted);
+    margin-top:12px;
+  }
+
+  /* === SPEECH BUBBLE === */
+  .speech{
+    background:var(--text-primary);
+    color:var(--bg-deep);
+    font-weight:600;
+    font-size:1.1rem;
+    padding:16px 22px;
+    border-radius:18px;
+    display:inline-block;
+    max-width:400px;
+    line-height:1.4;
+    position:relative;
+  }
+  .speech--tail::after{
+    content:'';
+    position:absolute;
+    bottom:-14px;
+    left:32px;
+    border-left:14px solid transparent;
+    border-right:6px solid transparent;
+    border-top:16px solid var(--text-primary);
+  }
+
+  /* === STRIKE === */
+  .strike{
+    text-decoration:line-through;
+    color:var(--text-muted);
+  }
+
+  /* === THE LIST === */
+  .the-list{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:16px;
+  }
+  .the-list li{
+    font-size:14px;
+    color:var(--text-secondary);
+    padding-left:20px;
+    position:relative;
+    line-height:1.5;
+  }
+  .the-list li::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:8px;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--claw-green);
+  }
+
+  /* === BIG QUOTE === */
+  .big-quote{
+    font-size:clamp(1.5rem,4vw,2.5rem);
+    font-weight:700;
+    line-height:1.2;
+    color:var(--text-primary);
+    text-align:center;
+    padding:20px 0;
+  }
+  .big-quote span{color:var(--claw-green)}
+
+  /* === CTA STRIP === */
+  .cta-strip{
+    border:4px solid var(--border-light);
+    border-top:none;
+    background:var(--bg-surface);
+    padding:40px 36px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+  }
+  .cta-strip img{width:60px;height:60px;opacity:0.5}
+  .btn{
+    font-family:var(--font);
+    font-weight:600;
+    font-size:15px;
+    border:none;
+    border-radius:var(--radius-full);
+    padding:12px 28px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:all 0.15s ease;
+    background:var(--claw-green);
+    color:white;
+  }
+  .btn:hover{background:#1ea54e}
+  .btn svg{width:16px;height:16px;fill:currentColor}
+  .cta-strip .boo{
+    font-family:var(--chaos);
+    font-size:12px;
+    color:var(--text-muted);
+    margin-top:8px;
+  }
+
+  /* === RESPONSIVE === */
+  @media(max-width:640px){
+    body{padding:12px}
+    .panel{padding:28px 20px}
+    .splash{padding:40px 20px}
+    .panel-grid{grid-template-columns:1fr}
+    .panel-grid .panel--wide{grid-column:auto}
+  }
+</style>
+</head>
+<body>
+
+<div style="max-width:800px;margin:0 auto;">
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    GhostClaw
+  </a>
+</div>
+
+<div class="comic">
+
+  <!-- SPLASH -->
+  <div class="splash">
+    <img src="ghostclaw-mark-final.svg" alt="GhostClaw">
+    <h1>Why Ghost<span>Claw</span></h1>
+    <p class="sub">or: how I stopped worrying and gave an AI its own computer</p>
+  </div>
+
+  <!-- PANEL 1: THE PROBLEM -->
+  <div class="panel panel--deep">
+    <div class="narration">The situation.</div>
+    <p>So you use Claude. You're coding all day, you've seen everyone set up OpenClaw, seen the competitors, seen it get bought out by OpenAI. You've tried to use it and it's <strong>fucking trash</strong>.</p>
+    <p>The setup is some approximation of the Claude Code terminal. The online settings don't really work. It feels like a step back in time compared to what you're building across Claude Code, Cursor, the rest of it. And worst of all it's <strong>500,000 lines of code</strong> - so making changes that don't break everything is non-trivial.</p>
+  </div>
+
+  <!-- PANEL 2: THE BOOKMARK GRAVEYARD -->
+  <div class="panel panel--surface panel--tilt-cw">
+    <div class="narration">Sound familiar?</div>
+    <p>You've done what I've done. Bookmarked every OpenClaw setup guide. Copied every config workaround. Hit bumps at every step and pushed through anyway.</p>
+    <p>Don't get me wrong - it is a thing of <strong>consummate beauty</strong>. Watching your agent talk to other agents on forums, self-iterate, spread out into the world, install things, work shit out for itself and get on with it. That's a mind-bendingly impressive workflow that we all know is going beyond the mainstream.</p>
+    <p class="chaos">* stares at bookmarks bar, weeps gently *</p>
+  </div>
+
+  <!-- PANEL 3: THE OLD CAR -->
+  <div class="panel panel--elevated panel--tilt-ccw">
+    <div class="narration">But.</div>
+    <p>It's currently like driving an old classic car. One drives in three is fixing it when it breaks down. Which has some charm - gets you seeing how under the hood works, brings joy in itself. But it's not how I want to work when 99% of what I'm doing is strong implementation plans and then having Claude or Codex get on with it and <strong>fucking smash it</strong>.</p>
+    <p>It feels like a step back in time. And yeah - my man just made his retirement money from Sam, so he's not gonna iterate this one.</p>
+  </div>
+
+  <!-- PANEL GRID: THE TWO OPTIONS -->
+  <div class="panel-grid">
+
+    <div class="panel panel--surface">
+      <div class="narration">Option A: OpenClaw</div>
+      <p><strong>Beautiful. Broken.</strong></p>
+      <p>500k lines of code. Setup is an approximation. Online settings half-work. Runs wild across your system - which is the point, but it's statistically impossible to set up safely on your main machine.</p>
+      <p class="chaos">charming when it works</p>
+    </div>
+
+    <div class="panel panel--deep">
+      <div class="narration">Option B: NanoClaw</div>
+      <p><strong>Elegant. Caged.</strong></p>
+      <p>400 lines of core code. Completely customisable. Works out-of-the-box. But it runs in containers - great for security, less great if you want your agent to actually <em>do things</em> across your system.</p>
+      <p class="chaos">elegant but in a box</p>
+    </div>
+
+  </div>
+
+  <!-- PANEL: THE VERDICT -->
+  <div class="panel panel--elevated">
+    <div class="narration">The no-brainer.</div>
+    <p>If you're choosing between the two and you're already an advanced Claude user, NanoClaw wins. It's not close. What they've built is elegant, beautiful, works out of the box. Adding skills mirrors what you already do in Claude Code, which is a really nice system.</p>
+    <p>But it lacks some of the esoteric beauty that OpenClaw gives. The full gamut across your system, your files, your chats, the heartbeat, the freedom. I wanted to see if I could build <strong>fundamentally NanoClaw with OpenClaw functionality</strong>.</p>
+  </div>
+
+  <!-- PANEL: THE USE CASE -->
+  <div class="panel panel--surface panel--tilt-cw">
+    <div class="narration">My use case.</div>
+    <p>I'm setting up a new Mac Mini with no particularly sensitive files. Fresh accounts across the board:</p>
+    <ul class="the-list">
+      <li>New iCloud</li>
+      <li>New Gmail</li>
+      <li>New Vercel</li>
+      <li>New GitHub</li>
+    </ul>
+    <p style="margin-top:16px">I really didn't need a complex container or Docker system to protect other files. I want my agent to <strong>go wild</strong> and show what it can do - but I also want to add skills really easily. Ideally in exactly the same way I already add skills in Claude Code.</p>
+  </div>
+
+  <!-- PANEL: THE PUNCHLINE -->
+  <div class="panel panel--deep" style="text-align:center;padding:56px 36px">
+    <p class="big-quote">NanoClaw's simplicity.<br>OpenClaw's freedom.<br><span>None of the mess.</span></p>
+    <p class="chaos" style="margin-top:20px">a frankenstein, if you will</p>
+  </div>
+
+  <!-- PANEL: WHAT IT IS -->
+  <div class="panel panel--elevated panel--tilt-ccw">
+    <div class="narration">So here it is.</div>
+    <p>GhostClaw is set up to be its own agent on its own computer, with its own accounts for everything it needs. You interact with it as a <strong>co-worker</strong>.</p>
+    <p>A co-worker that knows everything about you. Knows what annoys you, what pleases you, how you like to be talked to. That can read and reply to emails. That you can voice note. That reads your Slack, reads your Notion, adds to both. Gets daily briefings, heartbeat monitoring, full context across everything you're working on.</p>
+    <p>And runs <strong>fucking wild</strong> on your computer.</p>
+  </div>
+
+  <!-- PANEL: WHAT WE ADDED -->
+  <div class="panel panel--surface">
+    <div class="narration">What's been added on top of NanoClaw.</div>
+    <ul class="the-list">
+      <li>Containers stripped out - bare metal, full system access</li>
+      <li>Telegram groups as standard</li>
+      <li>Voice transcription from OpenAI - talk to your agent, hear back</li>
+      <li>Security scanning layer on all skill installs</li>
+      <li>OpenClaw-style heartbeat monitoring + daily briefings</li>
+      <li>OpenClaw-style memory structure recreated</li>
+      <li>Full compatibility across the NanoClaw + OpenClaw skill ecosystem</li>
+    </ul>
+  </div>
+
+  <!-- PANEL: THE SETUP -->
+  <div class="panel panel--deep panel--tilt-cw">
+    <div class="narration">How I set it up.</div>
+    <p>Bought a Mac Mini. Set up a new iCloud account. Set up screen sharing from my MacBook Air to control it. Installed Claude Code in Terminal. Pointed it at GhostClaw. Typed four lines.</p>
+
+    <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:16px 0;max-width:480px;font-family:'SF Mono','Fira Code',monospace;font-size:14px;line-height:1.8">
+      <span style="color:var(--text-muted)">$</span> <span style="color:var(--claw-green)">git clone</span> <span style="color:var(--text-secondary)">ghostclaw</span><br>
+      <span style="color:var(--text-muted)">$</span> <span style="color:var(--claw-green)">cd</span> <span style="color:var(--text-secondary)">ghostclaw</span><br>
+      <span style="color:var(--text-muted)">$</span> <span style="color:var(--claw-green)">npm install</span><br>
+      <span style="color:var(--text-muted)">$</span> <span style="color:var(--claw-green)">claude</span>
+    </div>
+
+    <p>Then <code style="background:var(--bg-elevated);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;color:var(--claw-green-light)">/setup-ghostclaw</code> - and Claude Code talks you through everything. Telegram bot from BotFather, WhatsApp group, email if you want it. API keys where needed. About 10 minutes.</p>
+  </div>
+
+  <!-- PANEL: OPTIONAL SKILLS -->
+  <div class="panel panel--surface panel--tilt-ccw">
+    <div class="narration">Optional extras.</div>
+    <p>Personally I found it useful to have GitHub and Vercel set up too. So I can literally tell my agent to build something, deploy it on the internet, and send me the link.</p>
+    <p class="chaos">future is stupid innit</p>
+  </div>
+
+  <!-- PANEL GRID: BOTTOM -->
+  <div class="panel-grid">
+    <div class="panel panel--elevated" style="display:flex;align-items:center;justify-content:center;text-align:center;min-height:200px">
+      <div>
+        <p style="font-size:15px;color:var(--text-secondary)">
+          <span class="strike">containers</span><br>
+          <span class="strike">kubernetes</span><br>
+          <span class="strike">500k lines of code</span>
+        </p>
+      </div>
+    </div>
+    <div class="panel panel--deep" style="display:flex;align-items:center;justify-content:center;text-align:center;min-height:200px">
+      <div class="speech speech--tail">give it a ride.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <img src="ghostclaw-mark-final.svg" alt="GhostClaw">
+    <a href="https://github.com/b1rdmania/ghostclaw" class="btn" target="_blank">
+      <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Get GhostClaw
+    </a>
+    <p class="boo">boo.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
