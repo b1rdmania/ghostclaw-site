@@ -442,6 +442,54 @@
     border-radius: var(--radius-full);
   }
 
+  /* === MISSION CONTROL === */
+  .mission-control {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 24px 4rem;
+  }
+  .mc-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    align-items: center;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    overflow: hidden;
+  }
+  .mc-text h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .mc-text p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .mc-text code {
+    background: var(--bg-elevated);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'SF Mono', monospace;
+    font-size: 13px;
+    color: var(--claw-green-light);
+  }
+  .mc-preview {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .mc-preview img {
+    width: 100%;
+    display: block;
+  }
+  @media (max-width: 768px) {
+    .mc-inner { grid-template-columns: 1fr; }
+  }
+
   /* === CTA === */
   .cta {
     text-align: center;
@@ -618,6 +666,20 @@
     <div class="feature-cell highlight">
       <h3>Bare Metal</h3>
       <p>No containers. No Kubernetes. No orchestration. Give it a dedicated machine with fresh accounts and let it run wild.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION CONTROL -->
+<section class="mission-control">
+  <div class="mc-inner">
+    <div class="mc-text">
+      <span class="feature-badge" style="margin-left:0;margin-bottom:10px;display:inline-block;">Built-in</span>
+      <h3>Mission Control</h3>
+      <p>Real-time dashboard at <code>localhost:3333</code>. Activity feed, channel status, task management, soul editing, send messages as the bot. SSE live updates, zero extra dependencies. Ships with the agent.</p>
+    </div>
+    <div class="mc-preview">
+      <img src="dashboard-preview.png" alt="GhostClaw Mission Control dashboard" loading="lazy">
     </div>
   </div>
 </section>
