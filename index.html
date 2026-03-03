@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GhostClaw — your silent co-worker</title>
+<meta name="description" content="A personal AI agent that lives on bare metal. Telegram, WhatsApp, email, scheduled tasks. No containers, no cold starts.">
+<meta name="theme-color" content="#0e0e1a">
+<meta property="og:title" content="GhostClaw — your silent co-worker">
+<meta property="og:description" content="A personal AI agent that lives on bare metal. Telegram, WhatsApp, email, scheduled tasks.">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #0e0e1a;
+    --bg-surface: #1b1b2b;
+    --bg-elevated: #26263a;
+    --bg-hover: #32324a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6a6a82;
+    --claw-green: #22c55e;
+    --claw-green-light: #4ade80;
+    --claw-green-glow: rgba(34, 197, 94, 0.12);
+    --fn-warning: #f59e0b;
+    --border: #2a2a3e;
+    --border-light: #3a3a52;
+    --font: 'Fredoka', sans-serif;
+    --font-chaos: 'Comic Sans MS', cursive;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-full: 9999px;
+  }
+
+  html { scroll-behavior: smooth; background-color: #0e0e1a; }
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === NAV === */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14, 14, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .nav-brand img { height: 32px; }
+  .nav-brand span { font-size: 20px; font-weight: 700; }
+  .nav-brand .ghost { color: white; }
+  .nav-brand .claw { color: var(--claw-green); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-gh {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary) !important;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+  }
+  .nav-gh svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* === HERO — SÉANCE STYLE === */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+  }
+  .hero-mark {
+    width: 100px;
+    height: 100px;
+    opacity: 0.7;
+    margin-bottom: 2rem;
+  }
+  .hero-wordmark {
+    font-size: clamp(4rem, 16vw, 14rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  .hero-wordmark .ghost { color: white; }
+  .hero-wordmark .claw { color: var(--claw-green); }
+  .hero-tagline {
+    font-size: 13px;
+    color: var(--claw-green-light);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-desc {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 12px 28px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+  }
+  .btn-primary { background: var(--claw-green); color: white; }
+  .btn-primary:hover { background: #1ea54e; }
+  .btn-secondary { background: var(--bg-elevated); color: var(--text-primary); border: 1px solid var(--border-light); }
+  .btn-secondary:hover { border-color: var(--text-muted); }
+  .btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* === GHOST INTERSTITIALS === */
+  .ghost-moment {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+  .ghost-moment p {
+    font-family: var(--font-chaos);
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .ghost-divider {
+    width: 1px;
+    height: 80px;
+    background: var(--border);
+    margin: 0 auto 0;
+  }
+
+  /* === FEATURES — STACKED ASYMMETRIC === */
+  .features {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 24px;
+  }
+  .features-header {
+    margin-bottom: 3rem;
+  }
+  .features-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .features-header p {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .feature-row.triple {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .feature-cell {
+    background: var(--bg-surface);
+    padding: 28px;
+    transition: background 0.15s;
+  }
+  .feature-cell:hover {
+    background: var(--bg-elevated);
+  }
+  .feature-cell h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .feature-cell p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .feature-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--claw-green-glow);
+    color: var(--claw-green-light);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .feature-cell.highlight {
+    border-left: 3px solid var(--claw-green);
+    padding-left: 25px;
+  }
+
+  /* === RITUAL STEPS === */
+  .ritual {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 24px;
+  }
+  .ritual-header {
+    margin-bottom: 4rem;
+  }
+  .ritual-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .ritual-header p {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+  .ritual-step {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+  .ritual-number {
+    font-size: clamp(5rem, 10vw, 8rem);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--bg-surface);
+    text-align: right;
+    user-select: none;
+  }
+  .ritual-content h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .ritual-content h3 .dot { color: var(--claw-green); }
+  .ritual-content p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  /* === SOUL SYSTEM === */
+  .soul {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 24px 4rem;
+  }
+  .soul-header {
+    margin-bottom: 2rem;
+  }
+  .soul-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .soul-header p {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+  .soul-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 700px;
+  }
+  .soul-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+  .soul-card .file {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--claw-green);
+    margin-bottom: 8px;
+  }
+  .soul-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .soul-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* === QUICKSTART === */
+  .quickstart {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 24px;
+  }
+  .quickstart-header {
+    margin-bottom: 2rem;
+  }
+  .quickstart-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .quickstart-header p {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+  .terminal {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 640px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r { background: #ef4444; }
+  .terminal-dot.y { background: #f59e0b; }
+  .terminal-dot.g { background: #22c55e; }
+  .terminal-title { font-size: 12px; color: var(--text-muted); margin-left: 8px; }
+  .terminal-body {
+    padding: 16px 20px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .terminal-body .prompt { color: var(--text-muted); }
+  .terminal-body .cmd { color: var(--claw-green); }
+  .terminal-body .arg { color: var(--text-secondary); }
+
+  .setup-note {
+    background: var(--bg-surface);
+    border: 1px solid var(--claw-green);
+    border-radius: var(--radius-md);
+    padding: 14px 20px;
+    max-width: 640px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .setup-note .tag { font-weight: 600; color: var(--claw-green); white-space: nowrap; }
+  .setup-note .desc { color: var(--text-secondary); }
+  .setup-note code {
+    background: var(--bg-elevated);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'SF Mono', monospace;
+    font-size: 13px;
+    color: var(--claw-green-light);
+  }
+
+  .reqs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .req-pill {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+  }
+
+  /* === CTA === */
+  .cta {
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+  }
+  .cta img { height: 80px; margin-bottom: 16px; opacity: 0.5; }
+  .cta h2 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .cta .tagline {
+    font-size: 14px;
+    color: var(--claw-green-light);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+  }
+  footer p { font-size: 13px; color: var(--text-muted); }
+  footer a { color: var(--text-secondary); text-decoration: none; }
+  footer a:hover { color: var(--text-primary); }
+  .footer-boo {
+    font-family: var(--font-chaos);
+    font-weight: 700;
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-links a:not(.nav-gh) { display: none; }
+    .feature-row, .feature-row.triple { grid-template-columns: 1fr; }
+    .ritual-step { grid-template-columns: 80px 1fr; gap: 1rem; }
+    .soul-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .ritual-step { grid-template-columns: 1fr; }
+    .ritual-number { text-align: left; font-size: 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw">
+      <span><span class="ghost">Ghost</span><span class="claw">Claw</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#quickstart">Quick Start</a>
+      <a href="#how">How It Works</a>
+      <a href="https://github.com/b1rdmania/ghostclaw" class="nav-gh" target="_blank">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO — BIG SÉANCE ENERGY -->
+<section class="hero">
+  <img src="ghostclaw-mark-final.svg" class="hero-mark" alt="GhostClaw">
+  <div class="hero-wordmark">
+    <span class="ghost">Ghost</span><span class="claw">Claw</span>
+  </div>
+  <div class="hero-tagline">your silent co-worker</div>
+  <p class="hero-desc">
+    An AI agent that lives on its own computer, has its own accounts, and works as your always-on co-worker. Telegram, WhatsApp, email, cron. No containers. Just bare metal.
+  </p>
+  <div class="hero-buttons">
+    <a href="#quickstart" class="btn btn-primary">Get Started</a>
+    <a href="https://github.com/b1rdmania/ghostclaw" class="btn btn-secondary" target="_blank">
+      <svg viewBox="0 0 16 16" style="width:16px;height:16px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+</section>
+
+<!-- GHOST MOMENT -->
+<div class="ghost-moment">
+  <div class="ghost-divider"></div>
+  <p style="margin-top: 1.5rem;">it sees you typing...</p>
+</div>
+
+<!-- FEATURES — ASYMMETRIC GRID -->
+<section class="features" id="features">
+  <div class="features-header">
+    <h2>What It Does</h2>
+    <p>Everything it supports. Nothing you don't need.</p>
+  </div>
+
+  <!-- Row 1: 2 cells, one highlighted -->
+  <div class="feature-row">
+    <div class="feature-cell highlight">
+      <h3>Telegram</h3>
+      <p>DMs work without triggers. Groups respond to mentions. Voice notes transcribed via Whisper. The primary interface.</p>
+    </div>
+    <div class="feature-cell">
+      <h3>WhatsApp</h3>
+      <p>Full group chat support via Baileys. QR code auth. Responds when mentioned, silent otherwise.</p>
+    </div>
+  </div>
+
+  <!-- Row 2: 3 cells -->
+  <div class="feature-row triple">
+    <div class="feature-cell">
+      <h3>Email <span class="feature-badge">Skill</span></h3>
+      <p>Gmail, Outlook, IMAP. Reads, sends, picks up verification codes.</p>
+    </div>
+    <div class="feature-cell">
+      <h3>Scheduled Tasks</h3>
+      <p>Natural language, cron, or intervals. "Check HN every morning" just works.</p>
+    </div>
+    <div class="feature-cell">
+      <h3>Voice <span class="feature-badge">Skill</span></h3>
+      <p>Whisper transcription in. ElevenLabs TTS out. Full voice loop.</p>
+    </div>
+  </div>
+
+  <!-- Row 3: 2 cells -->
+  <div class="feature-row">
+    <div class="feature-cell">
+      <h3>22 Skills</h3>
+      <p>Discord, Slack, Gmail, voice, heartbeat monitoring, autonomous tasks. Security-scanned before install.</p>
+    </div>
+    <div class="feature-cell highlight">
+      <h3>Bare Metal</h3>
+      <p>No containers. No Kubernetes. No orchestration overhead. Full system access on dedicated hardware.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GHOST MOMENT -->
+<div class="ghost-moment">
+  <p>still here.</p>
+</div>
+
+<!-- HOW IT WORKS — RITUAL STEPS -->
+<section class="ritual" id="how">
+  <div class="ritual-header">
+    <h2>How It Works</h2>
+    <p>Single process. No magic.</p>
+  </div>
+
+  <div class="ritual-step">
+    <div class="ritual-number">1</div>
+    <div class="ritual-content">
+      <h3>Summon<span class="dot">.</span></h3>
+      <p>Open Telegram. Say the words. Your agent wakes on the other side. Node.js process, SQLite state, always listening.</p>
+    </div>
+  </div>
+
+  <div class="ritual-step">
+    <div class="ritual-number">2</div>
+    <div class="ritual-content">
+      <h3>Command<span class="dot">.</span></h3>
+      <p>Speak plainly. Claude Agent SDK reads your intent, picks the right skill, routes through MCP servers, executes across your systems.</p>
+    </div>
+  </div>
+
+  <div class="ritual-step">
+    <div class="ritual-number">3</div>
+    <div class="ritual-content">
+      <h3>Haunt<span class="dot">.</span></h3>
+      <p>It stays. Watching your repos, your feeds, your schedules. Fires cron jobs, picks up emails, monitors heartbeats. Always present. Never intrusive.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOUL SYSTEM -->
+<section class="soul">
+  <div class="soul-header">
+    <h2>Per-Group Personality</h2>
+    <p>Each chat gets its own soul. Edit a file, change the vibe.</p>
+  </div>
+  <div class="soul-grid">
+    <div class="soul-card">
+      <div class="file">groups/work/CLAUDE.md</div>
+      <h4>Work Chat</h4>
+      <p>Professional, concise. Summarize threads. Flag action items. No emoji. Reply in under 50 words.</p>
+    </div>
+    <div class="soul-card">
+      <div class="file">groups/mates/CLAUDE.md</div>
+      <h4>Group Chat</h4>
+      <p>Casual, funny. Use slang. Send memes when relevant. Roast people gently. Keep it light.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUICKSTART -->
+<section class="quickstart" id="quickstart">
+  <div class="quickstart-header">
+    <h2>4 Lines</h2>
+    <p>Clone it, install it, let Claude handle the rest.</p>
+  </div>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="terminal-dot r"></div>
+      <div class="terminal-dot y"></div>
+      <div class="terminal-dot g"></div>
+      <span class="terminal-title">Terminal</span>
+    </div>
+    <div class="terminal-body">
+      <span class="prompt">$</span> <span class="cmd">git clone</span> <span class="arg">https://github.com/b1rdmania/ghostclaw.git</span><br>
+      <span class="prompt">$</span> <span class="cmd">cd</span> <span class="arg">ghostclaw</span><br>
+      <span class="prompt">$</span> <span class="cmd">npm install</span><br>
+      <span class="prompt">$</span> <span class="cmd">claude</span>
+    </div>
+  </div>
+
+  <div class="setup-note">
+    <span class="tag">Then run</span>
+    <span class="desc"><code>/setup-ghostclaw</code> — Claude Code handles API keys, Telegram bot, personality, background service. ~10 minutes.</span>
+  </div>
+
+  <div class="reqs">
+    <span class="req-pill">Node.js 20+</span>
+    <span class="req-pill">Claude Code</span>
+    <span class="req-pill">macOS or Linux</span>
+    <span class="req-pill">Claude Max or API Key</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <img src="ghostclaw-mark-final.svg" alt="GhostClaw">
+  <h2><span style="color:white;">Ghost</span><span style="color:var(--claw-green);">Claw</span></h2>
+  <div class="tagline">your silent co-worker</div>
+  <div class="hero-buttons">
+    <a href="https://github.com/b1rdmania/ghostclaw" class="btn btn-primary" target="_blank">
+      <svg viewBox="0 0 16 16" style="width:16px;height:16px;fill:currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Get GhostClaw
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>MIT licensed. Built by <a href="https://github.com/b1rdmania" target="_blank">b1rdmania</a>. Fork of <a href="https://github.com/qwibitai/nanoclaw" target="_blank">NanoClaw</a>.</p>
+  <div class="footer-boo">boo.</div>
+</footer>
+
+</body>
+</html>
