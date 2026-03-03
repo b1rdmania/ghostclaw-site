@@ -6,7 +6,7 @@
 <p align="center"><em>your silent co-worker</em></p>
 
 <p align="center">
-  <a href="https://ghostclaw-site.vercel.app">Live Site</a> &nbsp;·&nbsp;
+  <a href="https://ghostclaw.io">Live Site</a> &nbsp;·&nbsp;
   <a href="https://github.com/b1rdmania/ghostclaw">Main Repo</a>
 </p>
 
