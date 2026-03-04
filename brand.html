@@ -46,7 +46,7 @@
   .nav-back:hover{color:var(--text-primary)}
   .nav-back svg{width:16px;height:16px;fill:currentColor}
 
-  .content{max-width:700px;margin:0 auto}
+  .content{max-width:800px;margin:0 auto}
 
   h1{font-size:36px;font-weight:700;margin-bottom:8px}
   h1 span{color:var(--claw-green)}
@@ -56,9 +56,7 @@
 
   /* Colours */
   .swatches{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-  .swatch{
-    display:flex;flex-direction:column;align-items:center;gap:8px;
-  }
+  .swatch{display:flex;flex-direction:column;align-items:center;gap:8px}
   .swatch-box{
     width:64px;height:64px;border-radius:var(--radius-md);
     border:1px solid var(--border-light);
@@ -76,19 +74,47 @@
   .type-mono{font-family:'SF Mono','Fira Code',monospace;font-size:16px;color:var(--claw-green-light)}
   .type-chaos{font-family:var(--chaos);font-size:16px;color:var(--text-muted)}
 
-  /* Logo */
-  .logo-display{
-    background:var(--bg-surface);border:1px solid var(--border);
-    border-radius:var(--radius-lg);padding:40px;text-align:center;
-    margin-bottom:12px;
+  /* Logo grid */
+  .logo-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    margin-bottom:16px;
   }
-  .logo-display img{height:80px;margin-bottom:16px}
-  .logo-wordmark{font-size:48px;font-weight:700}
-  .logo-wordmark .ghost{color:white}
-  .logo-wordmark .claw{color:var(--claw-green)}
+  @media(max-width:600px){.logo-grid{grid-template-columns:1fr}}
+
+  .logo-card{
+    border:1px solid var(--border);border-radius:var(--radius-lg);
+    padding:40px 32px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:200px;
+  }
+  .logo-card img{height:80px;margin-bottom:16px}
+  .logo-card.large img{height:120px;margin-bottom:20px}
+  .logo-card .wordmark{font-size:36px;font-weight:700}
+  .logo-card.large .wordmark{font-size:48px}
+  .logo-card .ghost{color:white}
+  .logo-card .claw{color:var(--claw-green)}
+  .logo-card .label{
+    font-size:11px;color:var(--text-muted);margin-top:12px;
+    text-transform:uppercase;letter-spacing:0.05em;
+  }
+
+  /* Variant backgrounds */
+  .bg-dark{background:var(--bg-surface)}
+  .bg-deep{background:var(--bg-deep)}
+  .bg-light{background:#f0f0f0}
+  .bg-light .ghost{color:#1a1a2e}
+  .bg-light .label{color:#6a6a82}
+  .bg-green{background:var(--claw-green)}
+  .bg-green .ghost{color:white}
+  .bg-green .claw{color:white}
+  .bg-green .label{color:rgba(255,255,255,0.7)}
+
+  /* Mark only */
+  .logo-card.mark-only .wordmark{display:none}
+  .logo-card.mark-only img{height:100px;margin-bottom:0}
 
   /* Downloads */
-  .downloads{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .downloads{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
   .dl-btn{
     font-family:var(--font);font-size:13px;font-weight:600;
     color:var(--text-primary);background:var(--bg-surface);
@@ -99,16 +125,6 @@
   }
   .dl-btn:hover{border-color:var(--text-muted)}
   .dl-btn svg{width:14px;height:14px;fill:currentColor}
-
-  /* Tone */
-  .tone-examples{
-    display:flex;flex-direction:column;gap:8px;margin-top:12px;
-  }
-  .tone-do,.tone-dont{
-    font-size:14px;padding:10px 16px;border-radius:var(--radius-md);
-  }
-  .tone-do{background:rgba(34,197,94,0.08);color:var(--claw-green-light)}
-  .tone-dont{background:rgba(239,68,68,0.08);color:#f87171}
 
   .footer-boo{
     font-family:var(--chaos);font-weight:700;color:var(--text-muted);
@@ -125,7 +141,64 @@
   </a>
 
   <h1>Brand <span>Kit</span></h1>
-  <p class="subtitle">Colours, type, logo, tone. Take what you need.</p>
+  <p class="subtitle">Colours, type, logo. Take what you need.</p>
+
+  <!-- LOGO — HERO POSITION -->
+  <h2>Logo</h2>
+
+  <div class="logo-grid">
+    <div class="logo-card large bg-dark">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw mark">
+      <div class="wordmark"><span class="ghost">Ghost</span><span class="claw">Claw</span></div>
+      <div class="label">Mark + Wordmark — Dark</div>
+    </div>
+    <div class="logo-card large bg-light">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw mark">
+      <div class="wordmark"><span class="ghost">Ghost</span><span class="claw">Claw</span></div>
+      <div class="label">Mark + Wordmark — Light</div>
+    </div>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-card mark-only bg-deep">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw mark">
+      <div class="wordmark"></div>
+      <div class="label">Mark only — Deep</div>
+    </div>
+    <div class="logo-card mark-only bg-green">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw mark">
+      <div class="wordmark"></div>
+      <div class="label">Mark only — Green</div>
+    </div>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-card bg-dark">
+      <div class="wordmark"><span class="ghost">Ghost</span><span class="claw">Claw</span></div>
+      <div class="label">Wordmark only — Dark</div>
+    </div>
+    <div class="logo-card bg-light">
+      <div class="wordmark"><span class="ghost">Ghost</span><span class="claw">Claw</span></div>
+      <div class="label">Wordmark only — Light</div>
+    </div>
+  </div>
+
+  <p style="font-size:14px;color:var(--text-secondary);margin-top:16px">Mark alone for avatars and favicons. Mark + wordmark for headers. Wordmark alone for hero sections. "Ghost" in white (or dark on light backgrounds), "Claw" in green, always.</p>
+
+  <div class="downloads">
+    <a href="ghostclaw-mark-final.svg" download class="dl-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Logo SVG
+    </a>
+    <a href="ghostclaw-mark-512.png" download class="dl-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Mark PNG
+    </a>
+    <a href="og-image.png" download class="dl-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Social Card
+    </a>
+  </div>
 
   <!-- COLOURS -->
   <h2>Colours</h2>
@@ -190,41 +263,6 @@
   <div class="type-sample">
     <h3>Chaos Moments</h3>
     <div class="type-chaos">Comic Sans — boo. still here. *creaks*</div>
-  </div>
-
-  <!-- LOGO -->
-  <h2>Logo</h2>
-  <div class="logo-display">
-    <img src="ghostclaw-mark-final.svg" alt="GhostClaw mark">
-    <div class="logo-wordmark"><span class="ghost">Ghost</span><span class="claw">Claw</span></div>
-  </div>
-  <p style="font-size:14px;color:var(--text-secondary)">Mark alone for avatars and favicons. Mark + wordmark for headers. Wordmark alone for hero sections. "Ghost" in white, "Claw" in green, always.</p>
-
-  <div class="downloads">
-    <a href="ghostclaw-mark-final.svg" download class="dl-btn">
-      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-      Logo SVG
-    </a>
-    <a href="ghostclaw-mark-512.png" download class="dl-btn">
-      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-      Mark PNG
-    </a>
-    <a href="og-image.png" download class="dl-btn">
-      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-      Social Card
-    </a>
-  </div>
-
-  <!-- TONE -->
-  <h2>Tone of Voice</h2>
-  <p style="font-size:14px;color:var(--text-secondary);margin-bottom:12px">Casual, direct, slightly irreverent. Explain it like you're talking to a smart friend. Not a boardroom.</p>
-
-  <div class="tone-examples">
-    <div class="tone-do">"It runs wild on bare metal."</div>
-    <div class="tone-do">"Give it fresh accounts and let it loose."</div>
-    <div class="tone-do">"boo."</div>
-    <div class="tone-dont">"Leverage our enterprise-grade agentic infrastructure."</div>
-    <div class="tone-dont">"Unlock powerful synergies across your ecosystem."</div>
   </div>
 
   <div class="footer-boo">*creaks*</div>
