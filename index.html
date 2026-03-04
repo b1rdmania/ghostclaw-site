@@ -595,6 +595,69 @@
     margin-bottom: 2rem;
   }
 
+  /* === BRAND KIT === */
+  .brand-kit {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 24px;
+  }
+  .brand-kit h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+  }
+  .brand-colours {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .colour-swatch {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    position: relative;
+    cursor: default;
+  }
+  .colour-swatch::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .brand-assets {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .brand-assets a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.15s;
+  }
+  .brand-assets a:hover { border-color: var(--text-muted); }
+  .brand-assets a svg { width: 14px; height: 14px; fill: currentColor; }
+  .brand-font {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
   /* === FOOTER === */
   footer {
     text-align: center;
@@ -677,7 +740,7 @@
 <!-- EXPERIMENTAL WARNING -->
 <div class="experimental">
   <div class="experimental-inner">
-    <strong>This is experimental agentic AI.</strong> GhostClaw runs autonomously on your machine with full system access. It installs packages, writes files, makes network requests, and executes code — by design. Understand what you're running. Review skills before installing. Ask Claude if you're unsure. This is powerful, and that means you should be careful with it.
+    <strong>Experimental agentic AI.</strong> This thing runs autonomously with full system access. It writes files, installs packages, and executes code — that's the point. Know what you're running. Review skills before you install them.
   </div>
 </div>
 
@@ -965,6 +1028,39 @@
     </a>
   </div>
 </div>
+
+<!-- BRAND KIT -->
+<section class="brand-kit">
+  <h3>Brand Kit</h3>
+
+  <div class="brand-colours">
+    <div class="colour-swatch" style="background:#0e0e1a" data-label="Deep"></div>
+    <div class="colour-swatch" style="background:#1b1b2b" data-label="Surface"></div>
+    <div class="colour-swatch" style="background:#26263a" data-label="Elevated"></div>
+    <div class="colour-swatch" style="background:#22c55e" data-label="Green"></div>
+    <div class="colour-swatch" style="background:#4ade80" data-label="Accent"></div>
+    <div class="colour-swatch" style="background:#f0f0f0" data-label="Text"></div>
+    <div class="colour-swatch" style="background:#a0a0b8" data-label="Secondary"></div>
+    <div class="colour-swatch" style="background:#f59e0b" data-label="Warning"></div>
+  </div>
+
+  <p class="brand-font">Fredoka (display + body) &nbsp;·&nbsp; SF Mono (code) &nbsp;·&nbsp; Comic Sans (chaos moments)</p>
+
+  <div class="brand-assets">
+    <a href="ghostclaw-mark-final.svg" download>
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Logo SVG
+    </a>
+    <a href="ghostclaw-mark-512.png" download>
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Mark PNG
+    </a>
+    <a href="og-image.png" download>
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Social Card
+    </a>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
