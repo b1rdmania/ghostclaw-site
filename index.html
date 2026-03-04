@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GhostClaw — your silent co-worker</title>
-<meta name="description" content="An AI agent that lives on your computer and does stuff for you. Telegram, WhatsApp, email, scheduled tasks. No containers.">
+<meta name="description" content="A bare-metal AI agent that runs on your hardware, under your control. Telegram, WhatsApp, email, scheduled tasks. Single Node.js process. 10 minutes to set up.">
 <meta name="theme-color" content="#0e0e1a">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ghostclaw.io">
 <meta property="og:title" content="GhostClaw — your silent co-worker">
-<meta property="og:description" content="An AI agent that lives on your computer and does stuff for you. Telegram, WhatsApp, email, scheduled tasks. No containers.">
+<meta property="og:description" content="A bare-metal AI agent that runs on your hardware, under your control. Telegram, WhatsApp, email, scheduled tasks. 10 minutes to set up.">
 <meta property="og:image" content="https://ghostclaw.io/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -490,6 +490,71 @@
     .mc-inner { grid-template-columns: 1fr; }
   }
 
+  /* === COMPARISON TABLE === */
+  .comparison {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 24px;
+  }
+  .comparison-header {
+    margin-bottom: 2rem;
+  }
+  .comparison-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .comparison-header p {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .comparison-table th,
+  .comparison-table td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-table th {
+    background: var(--bg-elevated);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+  }
+  .comparison-table td {
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table tr:hover td { background: var(--bg-elevated); }
+  .comparison-table tr.highlight td {
+    background: rgba(34, 197, 94, 0.06);
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .comparison-table tr.highlight:hover td {
+    background: rgba(34, 197, 94, 0.1);
+  }
+  .comparison-table .name-cell {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .comparison-table .gc-name {
+    color: var(--claw-green);
+  }
+  .weakness { color: var(--text-muted); font-size: 13px; }
+
   /* === CTA === */
   .cta {
     text-align: center;
@@ -533,6 +598,9 @@
     .feature-row, .feature-row.triple { grid-template-columns: 1fr; }
     .ritual-step { grid-template-columns: 80px 1fr; gap: 1rem; }
     .soul-grid { grid-template-columns: 1fr; }
+    .comparison-table { font-size: 13px; }
+    .comparison-table th, .comparison-table td { padding: 10px 12px; }
+    .comparison-table .hide-mobile { display: none; }
   }
   @media (max-width: 480px) {
     .hero-buttons { flex-direction: column; align-items: center; }
@@ -575,7 +643,7 @@
   <div class="hero-tagline">your silent co-worker</div>
   <div style="margin-bottom:1.5rem;"><span class="feature-badge" style="font-size:11px;padding:4px 12px;">Public Beta</span></div>
   <p class="hero-desc">
-    An AI agent that lives on its own computer, with its own accounts. Telegram, WhatsApp, email, scheduled tasks. No containers, no cloud — just a process on a machine you own. It runs wild on bare metal.
+    Your AI agent should run on your hardware, under your control. Not someone else's containers. Not someone else's cloud. A single Node.js process on a machine you own. Telegram, WhatsApp, email, cron. 10 minutes to set up.
   </p>
   <div class="hero-buttons">
     <a href="#quickstart" class="btn btn-primary">Get Started</a>
@@ -793,6 +861,57 @@
       <p>Casual, funny. Use slang. Send memes when relevant. Roast people gently. Keep it light.</p>
     </div>
   </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison">
+  <div class="comparison-header">
+    <h2>The Landscape</h2>
+    <p>The personal AI agent space is fragmenting. Here's where GhostClaw fits.</p>
+  </div>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Agent</th>
+        <th>Approach</th>
+        <th class="hide-mobile">Codebase</th>
+        <th>Trade-off</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name-cell">OpenClaw</td>
+        <td>Full-featured, 700+ skill marketplace</td>
+        <td class="hide-mobile">430K+ lines</td>
+        <td class="weakness">Massive codebase, complex setup, security incidents</td>
+      </tr>
+      <tr>
+        <td class="name-cell">NanoClaw</td>
+        <td>Container isolation, security-first</td>
+        <td class="hide-mobile">~2K lines</td>
+        <td class="weakness">Containers limit what the agent can do on your system</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Nanobot</td>
+        <td>Ultra-minimal Python agent</td>
+        <td class="hide-mobile">4K lines</td>
+        <td class="weakness">Fewer integrations, small ecosystem</td>
+      </tr>
+      <tr>
+        <td class="name-cell">EasyClaw</td>
+        <td>One-click managed deploy</td>
+        <td class="hide-mobile">Hosted</td>
+        <td class="weakness">No local control, managed only</td>
+      </tr>
+      <tr class="highlight">
+        <td class="name-cell gc-name">GhostClaw</td>
+        <td>Bare metal, single process, full system access</td>
+        <td class="hide-mobile">~4K lines</td>
+        <td style="color:var(--claw-green-light)">Runs on your hardware. No containers. 10 min setup.</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <!-- CTA -->
