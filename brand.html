@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GhostClaw Brand Kit</title>
+<meta name="theme-color" content="#0e0e1a">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --bg-deep:#0e0e1a;
+    --bg-surface:#1b1b2b;
+    --bg-elevated:#26263a;
+    --text-primary:#f0f0f0;
+    --text-secondary:#a0a0b8;
+    --text-muted:#6a6a82;
+    --claw-green:#22c55e;
+    --claw-green-light:#4ade80;
+    --border:#2a2a3e;
+    --border-light:#3a3a52;
+    --font:'Fredoka',sans-serif;
+    --chaos:'Comic Sans MS',cursive;
+    --radius-md:12px;
+    --radius-lg:20px;
+    --radius-full:9999px;
+  }
+
+  html{scroll-behavior:smooth;background:#0e0e1a}
+  body{
+    background:var(--bg-deep);
+    color:var(--text-primary);
+    font-family:var(--font);
+    -webkit-font-smoothing:antialiased;
+    padding:24px;
+    line-height:1.6;
+  }
+
+  .nav-back{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:14px;font-weight:500;color:var(--text-secondary);
+    text-decoration:none;margin-bottom:32px;transition:color 0.15s;
+  }
+  .nav-back:hover{color:var(--text-primary)}
+  .nav-back svg{width:16px;height:16px;fill:currentColor}
+
+  .content{max-width:700px;margin:0 auto}
+
+  h1{font-size:36px;font-weight:700;margin-bottom:8px}
+  h1 span{color:var(--claw-green)}
+  .subtitle{font-size:16px;color:var(--text-secondary);margin-bottom:3rem}
+
+  h2{font-size:20px;font-weight:600;margin-bottom:16px;margin-top:3rem}
+
+  /* Colours */
+  .swatches{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .swatch{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .swatch-box{
+    width:64px;height:64px;border-radius:var(--radius-md);
+    border:1px solid var(--border-light);
+  }
+  .swatch-label{font-size:11px;color:var(--text-muted);text-align:center}
+  .swatch-hex{font-family:'SF Mono','Fira Code',monospace;font-size:11px;color:var(--text-secondary)}
+
+  /* Typography */
+  .type-sample{
+    background:var(--bg-surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:24px;margin-bottom:12px;
+  }
+  .type-sample h3{font-size:14px;color:var(--text-muted);font-weight:500;margin-bottom:12px}
+  .type-fredoka{font-family:var(--font);font-size:28px;font-weight:700}
+  .type-mono{font-family:'SF Mono','Fira Code',monospace;font-size:16px;color:var(--claw-green-light)}
+  .type-chaos{font-family:var(--chaos);font-size:16px;color:var(--text-muted)}
+
+  /* Logo */
+  .logo-display{
+    background:var(--bg-surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:40px;text-align:center;
+    margin-bottom:12px;
+  }
+  .logo-display img{height:80px;margin-bottom:16px}
+  .logo-wordmark{font-size:48px;font-weight:700}
+  .logo-wordmark .ghost{color:white}
+  .logo-wordmark .claw{color:var(--claw-green)}
+
+  /* Downloads */
+  .downloads{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .dl-btn{
+    font-family:var(--font);font-size:13px;font-weight:600;
+    color:var(--text-primary);background:var(--bg-surface);
+    border:1px solid var(--border);padding:10px 18px;
+    border-radius:var(--radius-full);text-decoration:none;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:border-color 0.15s;
+  }
+  .dl-btn:hover{border-color:var(--text-muted)}
+  .dl-btn svg{width:14px;height:14px;fill:currentColor}
+
+  /* Tone */
+  .tone-examples{
+    display:flex;flex-direction:column;gap:8px;margin-top:12px;
+  }
+  .tone-do,.tone-dont{
+    font-size:14px;padding:10px 16px;border-radius:var(--radius-md);
+  }
+  .tone-do{background:rgba(34,197,94,0.08);color:var(--claw-green-light)}
+  .tone-dont{background:rgba(239,68,68,0.08);color:#f87171}
+
+  .footer-boo{
+    font-family:var(--chaos);font-weight:700;color:var(--text-muted);
+    font-size:12px;text-align:center;margin-top:4rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="content">
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    GhostClaw
+  </a>
+
+  <h1>Brand <span>Kit</span></h1>
+  <p class="subtitle">Colours, type, logo, tone. Take what you need.</p>
+
+  <!-- COLOURS -->
+  <h2>Colours</h2>
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-box" style="background:#0e0e1a"></div>
+      <span class="swatch-label">Deep</span>
+      <span class="swatch-hex">#0e0e1a</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#1b1b2b"></div>
+      <span class="swatch-label">Surface</span>
+      <span class="swatch-hex">#1b1b2b</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#26263a"></div>
+      <span class="swatch-label">Elevated</span>
+      <span class="swatch-hex">#26263a</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#22c55e"></div>
+      <span class="swatch-label">Green</span>
+      <span class="swatch-hex">#22c55e</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#4ade80"></div>
+      <span class="swatch-label">Accent</span>
+      <span class="swatch-hex">#4ade80</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#f0f0f0"></div>
+      <span class="swatch-label">Text</span>
+      <span class="swatch-hex">#f0f0f0</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#a0a0b8"></div>
+      <span class="swatch-label">Secondary</span>
+      <span class="swatch-hex">#a0a0b8</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#f59e0b"></div>
+      <span class="swatch-label">Warning</span>
+      <span class="swatch-hex">#f59e0b</span>
+    </div>
+    <div class="swatch">
+      <div class="swatch-box" style="background:#ef4444"></div>
+      <span class="swatch-label">Error</span>
+      <span class="swatch-hex">#ef4444</span>
+    </div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <h2>Typography</h2>
+  <div class="type-sample">
+    <h3>Display + Body</h3>
+    <div class="type-fredoka">Fredoka — your silent co-worker</div>
+  </div>
+  <div class="type-sample">
+    <h3>Code</h3>
+    <div class="type-mono">SF Mono / Fira Code — /setup-ghostclaw</div>
+  </div>
+  <div class="type-sample">
+    <h3>Chaos Moments</h3>
+    <div class="type-chaos">Comic Sans — boo. still here. *creaks*</div>
+  </div>
+
+  <!-- LOGO -->
+  <h2>Logo</h2>
+  <div class="logo-display">
+    <img src="ghostclaw-mark-final.svg" alt="GhostClaw mark">
+    <div class="logo-wordmark"><span class="ghost">Ghost</span><span class="claw">Claw</span></div>
+  </div>
+  <p style="font-size:14px;color:var(--text-secondary)">Mark alone for avatars and favicons. Mark + wordmark for headers. Wordmark alone for hero sections. "Ghost" in white, "Claw" in green, always.</p>
+
+  <div class="downloads">
+    <a href="ghostclaw-mark-final.svg" download class="dl-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Logo SVG
+    </a>
+    <a href="ghostclaw-mark-512.png" download class="dl-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Mark PNG
+    </a>
+    <a href="og-image.png" download class="dl-btn">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Social Card
+    </a>
+  </div>
+
+  <!-- TONE -->
+  <h2>Tone of Voice</h2>
+  <p style="font-size:14px;color:var(--text-secondary);margin-bottom:12px">Casual, direct, slightly irreverent. Explain it like you're talking to a smart friend. Not a boardroom.</p>
+
+  <div class="tone-examples">
+    <div class="tone-do">"It runs wild on bare metal."</div>
+    <div class="tone-do">"Give it fresh accounts and let it loose."</div>
+    <div class="tone-do">"boo."</div>
+    <div class="tone-dont">"Leverage our enterprise-grade agentic infrastructure."</div>
+    <div class="tone-dont">"Unlock powerful synergies across your ecosystem."</div>
+  </div>
+
+  <div class="footer-boo">*creaks*</div>
+</div>
+
+</body>
+</html>

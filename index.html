@@ -595,69 +595,6 @@
     margin-bottom: 2rem;
   }
 
-  /* === BRAND KIT === */
-  .brand-kit {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem 24px;
-  }
-  .brand-kit h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: var(--text-secondary);
-  }
-  .brand-colours {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  .colour-swatch {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-    position: relative;
-    cursor: default;
-  }
-  .colour-swatch::after {
-    content: attr(data-label);
-    position: absolute;
-    bottom: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-  .brand-assets {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .brand-assets a {
-    font-size: 13px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    padding: 8px 14px;
-    border-radius: var(--radius-full);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: border-color 0.15s;
-  }
-  .brand-assets a:hover { border-color: var(--text-muted); }
-  .brand-assets a svg { width: 14px; height: 14px; fill: currentColor; }
-  .brand-font {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-  }
-
   /* === FOOTER === */
   footer {
     text-align: center;
@@ -1029,44 +966,34 @@
   </div>
 </div>
 
-<!-- BRAND KIT -->
-<section class="brand-kit">
-  <h3>Brand Kit</h3>
-
-  <div class="brand-colours">
-    <div class="colour-swatch" style="background:#0e0e1a" data-label="Deep"></div>
-    <div class="colour-swatch" style="background:#1b1b2b" data-label="Surface"></div>
-    <div class="colour-swatch" style="background:#26263a" data-label="Elevated"></div>
-    <div class="colour-swatch" style="background:#22c55e" data-label="Green"></div>
-    <div class="colour-swatch" style="background:#4ade80" data-label="Accent"></div>
-    <div class="colour-swatch" style="background:#f0f0f0" data-label="Text"></div>
-    <div class="colour-swatch" style="background:#a0a0b8" data-label="Secondary"></div>
-    <div class="colour-swatch" style="background:#f59e0b" data-label="Warning"></div>
-  </div>
-
-  <p class="brand-font">Fredoka (display + body) &nbsp;·&nbsp; SF Mono (code) &nbsp;·&nbsp; Comic Sans (chaos moments)</p>
-
-  <div class="brand-assets">
-    <a href="ghostclaw-mark-final.svg" download>
-      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-      Logo SVG
-    </a>
-    <a href="ghostclaw-mark-512.png" download>
-      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-      Mark PNG
-    </a>
-    <a href="og-image.png" download>
-      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-      Social Card
-    </a>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
-  <p>MIT licensed. Built by <a href="https://github.com/b1rdmania" target="_blank">b1rdmania</a>. Forked from <a href="https://github.com/qwibitai/nanoclaw" target="_blank">NanoClaw</a> by <a href="https://github.com/qwibitai" target="_blank">qwibitai</a>. Inspired by <a href="https://github.com/OpenInterpreter/open-interpreter" target="_blank">OpenClaw</a>.</p>
-  <div class="footer-boo">boo</div>
+  <p>MIT licensed. Built by <a href="https://github.com/b1rdmania" target="_blank">b1rdmania</a>. Forked from <a href="https://github.com/qwibitai/nanoclaw" target="_blank">NanoClaw</a> by <a href="https://github.com/qwibitai" target="_blank">qwibitai</a>. Inspired by <a href="https://github.com/OpenInterpreter/open-interpreter" target="_blank">OpenClaw</a>. &nbsp;·&nbsp; <a href="brand.html">Brand Kit</a></p>
+  <div class="footer-boo" id="footerBoo">boo.</div>
 </footer>
+
+<script>
+// Ghost quip engine — subtle, infrequent, on-brand
+const ghostQuips = {
+  footer: ['boo.', 'watching.', '*creaks*', '...', 'still here.', 'always listening.', 'behind you.'],
+  interstitials: ['it sees you typing...', 'the walls are listening.', 'something moved.', 'did you hear that?', '*tap tap tap*', 'don\'t look behind you.']
+};
+
+// Footer rotation
+const footerEl = document.getElementById('footerBoo');
+if (footerEl) {
+  setInterval(() => {
+    footerEl.textContent = ghostQuips.footer[Math.floor(Math.random() * ghostQuips.footer.length)];
+  }, 30000);
+}
+
+// Swap ghost interstitials on page load (the "it sees you typing..." moments)
+document.querySelectorAll('.ghost-moment p').forEach(el => {
+  if (Math.random() < 0.3) {
+    el.textContent = ghostQuips.interstitials[Math.floor(Math.random() * ghostQuips.interstitials.length)];
+  }
+});
+</script>
 
 </body>
 </html>
