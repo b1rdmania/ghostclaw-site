@@ -695,14 +695,14 @@
   <p style="margin-top: 1.5rem;">it sees you typing...</p>
 </div>
 
-<!-- FEATURES — ASYMMETRIC GRID -->
+<!-- CORE — SHIPS WITH EVERY INSTALL -->
 <section class="features" id="features">
   <div class="features-header">
-    <h2>What It Does</h2>
-    <p>An AI that actually does things. You tell it what to do and it figures out the rest.</p>
+    <h2>Ships With Every Install</h2>
+    <p>Everything below is core. No extras to configure. You get all of this out of the box.</p>
   </div>
 
-  <!-- Row 1: 2 cells, one highlighted -->
+  <!-- Row 1: Channels -->
   <div class="feature-row">
     <div class="feature-cell highlight">
       <h3>Telegram</h3>
@@ -714,91 +714,46 @@
     </div>
   </div>
 
-  <!-- Row 2: 3 cells -->
+  <!-- Row 2: Core capabilities -->
   <div class="feature-row triple">
+    <div class="feature-cell highlight">
+      <h3>Web Research</h3>
+      <p>Perplexity-powered web search and deep research built in. Ask it anything current — it searches, reasons, and cites sources.</p>
+    </div>
     <div class="feature-cell">
-      <h3>Email <span class="feature-badge">Skill</span></h3>
-      <p>Connects to Gmail. Reads your inbox, sends replies, grabs verification codes automatically.</p>
+      <h3>Ralph Loops</h3>
+      <p>Autonomous multi-task engine. Hand it a checklist of tasks, it works through them one by one. Leave it running overnight, come back to finished work.</p>
     </div>
     <div class="feature-cell">
       <h3>Scheduled Tasks</h3>
       <p>Tell it "check Hacker News every morning" and it just does it. Cron syntax if you want precision, plain English if you don't.</p>
     </div>
-    <div class="feature-cell">
-      <h3>Voice <span class="feature-badge">Skill</span></h3>
-      <p>Send it a voice note, it transcribes and understands. Can talk back with ElevenLabs. Full voice conversation loop.</p>
-    </div>
   </div>
 
-  <!-- Row 3: 2 cells -->
-  <div class="feature-row">
+  <!-- Row 3: Infrastructure -->
+  <div class="feature-row triple">
+    <div class="feature-cell">
+      <h3>Per-Group Personality</h3>
+      <p>Each chat gets its own soul — tone, memory, rules. Edit a CLAUDE.md file, the personality changes instantly. Direct in DMs, casual in group chat.</p>
+    </div>
     <div class="feature-cell">
       <h3>Skills Engine</h3>
-      <p>Slack, email, voice, heartbeat monitoring, autonomous research runs. Install community skills or build your own. Each one gets security-scanned before install.</p>
+      <p>Add capabilities like installing a Claude Code skill. Community skills, or build your own. Every skill gets security-scanned before install.</p>
     </div>
     <div class="feature-cell highlight">
       <h3>Bare Metal</h3>
-      <p>No Docker. No cloud functions. No Kubernetes. Just a Node process on a machine you own. Give it fresh accounts and let it loose.</p>
+      <p>No Docker. No cloud functions. No Kubernetes. Single Node.js process, SQLite state. Give it fresh accounts and let it loose.</p>
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
-<section class="features" id="skills">
-  <div class="features-header">
-    <h2>Add Skills From Claude Code</h2>
-    <p>Type a command inside Claude Code, the bot gets a new ability. Each skill is security-scanned before install.</p>
-  </div>
-
-  <div class="feature-row triple">
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-heartbeat</code></h3>
-      <p>Periodic health checks — disk, logs, services. Silent unless something needs attention.</p>
-    </div>
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-morning-briefing</code></h3>
-      <p>Daily or weekly briefings. Weather, calendar, tasks, whatever you configure.</p>
-    </div>
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-gmail-agent</code></h3>
-      <p>Gmail read/send. Verification codes, urgent flags, summaries. Full email agent.</p>
-    </div>
-  </div>
-
-  <div class="feature-row triple">
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-voice-transcription</code></h3>
-      <p>Voice note transcription via ElevenLabs Scribe. Talk to your bot, it understands.</p>
-    </div>
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-voice-reply</code></h3>
-      <p>Bot replies with voice notes via ElevenLabs TTS. Full voice conversation loop.</p>
-    </div>
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-slack</code></h3>
-      <p>Slack as an additional channel. Socket Mode, no public URL needed.</p>
-    </div>
-  </div>
-
-  <div class="feature-row">
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/run-ralph</code></h3>
-      <p>Autonomous multi-task research loop. Hand it a checklist, it works through overnight. Outputs reports you can edit from the dashboard.</p>
-    </div>
-    <div class="feature-cell">
-      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-telegram-swarm</code></h3>
-      <p>Multi-bot agent teams in Telegram. Each sub-agent gets its own bot identity.</p>
-    </div>
-  </div>
-</section>
-
-<!-- MISSION CONTROL -->
+<!-- MISSION CONTROL — INSIDE CORE -->
 <section class="mission-control">
   <div class="mc-inner">
     <div class="mc-text">
-      <span class="feature-badge" style="margin-left:0;margin-bottom:10px;display:inline-block;">Built-in</span>
+      <span class="feature-badge" style="margin-left:0;margin-bottom:10px;display:inline-block;">Ships as standard</span>
       <h3>Mission Control</h3>
-      <p>Real-time dashboard at <code>localhost:3333</code>. Activity feed, channel status, task management, soul editing, research runs with editable output, send messages as the bot. SSE live updates, zero extra dependencies.</p>
+      <p>Real-time dashboard at <code>localhost:3333</code>. Activity feed, channel status, task scheduling, soul editing, research runs with editable output. Send messages as the bot. SSE live updates, zero extra dependencies.</p>
     </div>
     <div class="mc-preview">
       <img src="dashboard-preview.png" alt="GhostClaw Mission Control dashboard" loading="lazy">
@@ -808,8 +763,57 @@
 
 <!-- GHOST MOMENT -->
 <div class="ghost-moment">
-  <p>still here.</p>
+  <p>it knows what you need before you ask.</p>
 </div>
+
+<!-- OPTIONAL SKILLS — LAYER ON MORE -->
+<section class="features" id="skills">
+  <div class="features-header">
+    <h2>Layer On More</h2>
+    <p>Optional skills you add from Claude Code. One command each. Compatible with NanoClaw and OpenClaw skill ecosystems.</p>
+  </div>
+
+  <div class="feature-row triple">
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-gmail-agent</code></h3>
+      <p>Gmail read/send. Verification codes, urgent flags, summaries. Full email agent.</p>
+    </div>
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-voice-transcription</code></h3>
+      <p>Voice note transcription via ElevenLabs. Talk to your bot, it understands.</p>
+    </div>
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-voice-reply</code></h3>
+      <p>Bot replies with voice notes via ElevenLabs TTS. Full voice conversation loop.</p>
+    </div>
+  </div>
+
+  <div class="feature-row triple">
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-heartbeat</code></h3>
+      <p>Periodic health checks — disk, logs, services. Silent unless something needs attention.</p>
+    </div>
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-morning-briefing</code></h3>
+      <p>Daily or weekly briefings. Whatever you want to know when you wake up.</p>
+    </div>
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-slack</code></h3>
+      <p>Slack as an additional channel. Socket Mode, no public URL needed.</p>
+    </div>
+  </div>
+
+  <div class="feature-row">
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-telegram-swarm</code></h3>
+      <p>Multi-bot agent teams in Telegram. Each sub-agent gets its own bot identity.</p>
+    </div>
+    <div class="feature-cell">
+      <h3><code style="font-size:14px;color:var(--claw-green-light)">/add-update-check</code></h3>
+      <p>Weekly check for new GhostClaw releases. Notifies you when there's an update.</p>
+    </div>
+  </div>
+</section>
 
 <!-- HOW IT WORKS — RITUAL STEPS -->
 <section class="ritual" id="how">
