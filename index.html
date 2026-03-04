@@ -442,6 +442,26 @@
     border-radius: var(--radius-full);
   }
 
+  /* === EXPERIMENTAL BANNER === */
+  .experimental {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .experimental-inner {
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .experimental-inner strong {
+    color: var(--fn-warning);
+    font-weight: 600;
+  }
+
   /* === MISSION CONTROL === */
   .mission-control {
     max-width: 1100px;
@@ -654,6 +674,13 @@
   </div>
 </section>
 
+<!-- EXPERIMENTAL WARNING -->
+<div class="experimental">
+  <div class="experimental-inner">
+    <strong>This is experimental agentic AI.</strong> GhostClaw runs autonomously on your machine with full system access. It installs packages, writes files, makes network requests, and executes code — by design. Understand what you're running. Review skills before installing. Ask Claude if you're unsure. This is powerful, and that means you should be careful with it.
+  </div>
+</div>
+
 <!-- QUICKSTART — RIGHT UNDER HERO -->
 <section class="quickstart" id="quickstart">
   <div class="quickstart-header">
@@ -687,6 +714,10 @@
     <span class="req-pill">macOS or Linux</span>
     <span class="req-pill">Claude Max or API Key</span>
   </div>
+
+  <p style="font-size:13px;color:var(--text-muted);max-width:640px;margin-top:20px;line-height:1.6;">
+    Works best on its own machine — a Mac Mini, an old laptop, a VPS. Fresh accounts, dedicated hardware, let it grow. You <em>can</em> run it on your daily driver, but the whole point of GhostClaw is autonomy — it installs things, writes files, runs tasks on its own schedule. Give it a sandbox it can't outgrow.
+  </p>
 </section>
 
 <!-- GHOST MOMENT -->
