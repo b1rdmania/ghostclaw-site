@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills — GhostClaw</title>
+<meta name="description" content="Every skill available for GhostClaw — core capabilities, add-ons, and Claude Code skills built by the community.">
+<meta name="theme-color" content="#0e0e1a">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ghostclaw.io/skills.html">
+<meta property="og:title" content="Skills — GhostClaw">
+<meta property="og:description" content="Every skill available for GhostClaw. Core, add-ons, and Claude Code skills.">
+<meta property="og:image" content="https://ghostclaw.io/og-image.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #0e0e1a;
+    --bg-surface: #1b1b2b;
+    --bg-elevated: #26263a;
+    --bg-hover: #32324a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6a6a82;
+    --claw-green: #22c55e;
+    --claw-green-light: #4ade80;
+    --claw-green-glow: rgba(34, 197, 94, 0.12);
+    --border: #2a2a3e;
+    --border-light: #3a3a52;
+    --font: 'Fredoka', sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+  }
+
+  html { scroll-behavior: smooth; background-color: #0e0e1a; }
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14, 14, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-brand img { height: 32px; }
+  .nav-brand span { font-size: 20px; font-weight: 700; }
+  .nav-brand .ghost { color: white; }
+  .nav-brand .claw { color: var(--claw-green); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-links a.active { color: var(--claw-green-light); }
+  .nav-gh {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary) !important;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+  }
+  .nav-gh svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* PAGE HEADER */
+  .page-header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 24px 3rem;
+  }
+  .page-header h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .page-header p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* SECTION HEADERS */
+  .section-header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 24px 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .section-header p {
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+  .section-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--claw-green-glow);
+    color: var(--claw-green-light);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  /* SKILL GRID */
+  .skill-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .skill-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+  .skill-card {
+    background: var(--bg-surface);
+    padding: 28px;
+    transition: background 0.15s;
+  }
+  .skill-card:hover { background: var(--bg-elevated); }
+  .skill-card.highlight { border-left: 3px solid var(--claw-green); padding-left: 25px; }
+  .skill-name {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .skill-cmd {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    color: var(--claw-green-light);
+    background: var(--bg-elevated);
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .skill-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .skill-install {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-install span { color: var(--claw-green); }
+
+  /* TERMINAL */
+  .terminal {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 640px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r { background: #ef4444; }
+  .terminal-dot.y { background: #f59e0b; }
+  .terminal-dot.g { background: #22c55e; }
+  .terminal-title { font-size: 12px; color: var(--text-muted); margin-left: 8px; }
+  .terminal-body {
+    padding: 16px 20px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .terminal-body .prompt { color: var(--text-muted); }
+  .terminal-body .cmd { color: var(--claw-green); }
+  .terminal-body .arg { color: var(--text-secondary); }
+  .terminal-body .comment { color: var(--text-muted); font-style: italic; }
+
+  /* INSTALL BLOCK */
+  .install-block {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 3rem;
+  }
+  .install-block h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  /* GHOST MOMENT */
+  .ghost-moment {
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+  .ghost-moment p {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .ghost-divider {
+    width: 1px;
+    height: 60px;
+    background: var(--border);
+    margin: 0 auto 1.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+  footer a { color: var(--text-secondary); text-decoration: none; }
+  footer a:hover { color: var(--text-primary); }
+
+  @media (max-width: 768px) {
+    .nav-links a:not(.nav-gh) { display: none; }
+    .skill-grid { grid-template-columns: 1fr; }
+    .skill-grid.two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw">
+      <span><span class="ghost">Ghost</span><span class="claw">Claw</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="why.html">Why GhostClaw</a>
+      <a href="skills.html" class="active">Skills</a>
+      <a href="setup.html">Setup</a>
+      <a href="https://t.me/+8qJbqxzBQAZkYTNk" target="_blank" style="display:inline-flex;align-items:center;gap:4px;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Community
+      </a>
+      <a href="https://github.com/b1rdmania/ghostclaw" class="nav-gh" target="_blank">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Skills<span style="color:var(--claw-green)">.</span></h1>
+  <p>Everything GhostClaw can do. Core capabilities ship with every install. Add-ons slot in with one command. Claude Code skills extend what the agent builds.</p>
+</div>
+
+<!-- CORE SKILLS -->
+<div class="section-header">
+  <span class="section-label">Core — ships with every install</span>
+  <h2>Built In</h2>
+  <p>No extras to configure. You get all of this out of the box.</p>
+</div>
+
+<div class="skill-grid">
+  <div class="skill-card highlight">
+    <div class="skill-name">Telegram</div>
+    <div class="skill-desc">DM it like a person. In groups it only speaks when spoken to. Understands voice notes. This is how most people interact with it.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">WhatsApp</div>
+    <div class="skill-desc">Works in group chats. Scans your QR code to connect. Stays quiet until you mention it, then it acts.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card highlight">
+    <div class="skill-name">Web Research</div>
+    <div class="skill-desc">Perplexity-powered search and deep research built in. Ask it anything current — it searches, reasons, and cites sources.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Ralph Loops</div>
+    <div class="skill-desc">Autonomous multi-task engine. Hand it a checklist, it works through everything one by one. Leave it running overnight.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Scheduled Tasks</div>
+    <div class="skill-desc">Tell it "check Hacker News every morning" and it just does it. Cron syntax if you want precision, plain English if you don't.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Per-Group Personality</div>
+    <div class="skill-desc">Each chat gets its own soul — tone, memory, rules. Edit a CLAUDE.md, personality changes instantly.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Skills Engine</div>
+    <div class="skill-desc">Add capabilities like installing an app. Community skills or build your own. Every skill gets security-scanned before install.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card highlight">
+    <div class="skill-name">Mission Control</div>
+    <div class="skill-desc">Real-time dashboard at <code style="font-family:monospace;font-size:12px;background:var(--bg-elevated);padding:2px 6px;border-radius:4px;">localhost:3333</code>. Activity feed, channel status, task scheduling, soul editing. SSE live updates.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Bare Metal</div>
+    <div class="skill-desc">No Docker. No cloud functions. No Kubernetes. Single Node.js process, SQLite state. Give it a machine and let it loose.</div>
+    <div class="skill-install"><span>●</span> Ships as standard</div>
+  </div>
+</div>
+
+<div class="ghost-moment">
+  <div class="ghost-divider"></div>
+  <p>it's already learning your patterns.</p>
+</div>
+
+<!-- ADD-ON SKILLS -->
+<div class="section-header">
+  <span class="section-label">Add-ons — one command each</span>
+  <h2>Layer On More</h2>
+  <p>Optional skills you install from Claude Code. Compatible with NanoClaw and OpenClaw skill ecosystems.</p>
+</div>
+
+<div class="install-block">
+  <h3>How to install an add-on</h3>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="terminal-dot r"></div>
+      <div class="terminal-dot y"></div>
+      <div class="terminal-dot g"></div>
+      <span class="terminal-title">Terminal — inside your GhostClaw directory</span>
+    </div>
+    <div class="terminal-body">
+      <span class="prompt">$</span> <span class="cmd">claude</span><br>
+      <span class="comment"># then in Claude Code:</span><br>
+      <span class="prompt">></span> <span class="arg">/add-gmail-agent</span> <span class="comment"># or whichever skill</span>
+    </div>
+  </div>
+</div>
+
+<div class="skill-grid">
+  <div class="skill-card">
+    <div class="skill-cmd">/add-gmail-agent</div>
+    <div class="skill-desc">Gmail read/send. Verification codes, urgent flags, summaries. Full email agent loop.</div>
+    <div class="skill-install"><span>$</span> /add-gmail-agent</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-voice-transcription</div>
+    <div class="skill-desc">Voice note transcription via ElevenLabs. Send a voice message, get text back. Talk to your bot.</div>
+    <div class="skill-install"><span>$</span> /add-voice-transcription</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-voice-reply</div>
+    <div class="skill-desc">Bot replies with voice notes via ElevenLabs TTS. Full two-way voice conversation loop.</div>
+    <div class="skill-install"><span>$</span> /add-voice-reply</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-heartbeat</div>
+    <div class="skill-desc">Periodic health checks — disk, logs, services. Silent unless something needs your attention.</div>
+    <div class="skill-install"><span>$</span> /add-heartbeat</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-morning-briefing</div>
+    <div class="skill-desc">Daily or weekly briefings sent to Telegram. Whatever you want to know when you wake up.</div>
+    <div class="skill-install"><span>$</span> /add-morning-briefing</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-slack</div>
+    <div class="skill-desc">Slack as an additional channel. Socket Mode, no public URL needed. Runs alongside Telegram.</div>
+    <div class="skill-install"><span>$</span> /add-slack</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-telegram-swarm</div>
+    <div class="skill-desc">Multi-bot agent teams in Telegram. Each sub-agent gets its own bot identity and personality.</div>
+    <div class="skill-install"><span>$</span> /add-telegram-swarm</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-update-check</div>
+    <div class="skill-desc">Weekly check for new GhostClaw releases. Notifies you in Telegram when there's an update to pull.</div>
+    <div class="skill-install"><span>$</span> /add-update-check</div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-cmd">/add-namecheap</div>
+    <div class="skill-desc">Domain availability search via Namecheap API. Check and register domains without leaving your terminal.</div>
+    <div class="skill-install"><span>$</span> /add-namecheap</div>
+  </div>
+</div>
+
+<div class="ghost-moment">
+  <p>more skills drop regularly. watch the repo.</p>
+</div>
+
+<!-- CLAUDE CODE SKILLS -->
+<div class="section-header">
+  <span class="section-label">Claude Code skills — what the agent builds with</span>
+  <h2>Builder Skills</h2>
+  <p>Skills that extend Claude Code itself — loaded as slash commands, they change how the agent approaches tasks. Built by the GhostClaw team.</p>
+</div>
+
+<div class="install-block">
+  <h3>How to install a Claude Code skill</h3>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="terminal-dot r"></div>
+      <div class="terminal-dot y"></div>
+      <div class="terminal-dot g"></div>
+      <span class="terminal-title">Terminal</span>
+    </div>
+    <div class="terminal-body">
+      <span class="comment"># Clone the skill repo into ~/.claude/skills/</span><br>
+      <span class="prompt">$</span> <span class="cmd">git clone</span> <span class="arg">https://github.com/b1rdmania/[skill-repo]</span> <span class="arg">~/.claude/skills/[skill-name]</span><br>
+      <span class="comment"># Then use it in Claude Code:</span><br>
+      <span class="prompt">></span> <span class="arg">/skill-name</span> <span class="comment"># runs the skill</span>
+    </div>
+  </div>
+</div>
+
+<div class="skill-grid two-col">
+  <div class="skill-card highlight">
+    <div class="skill-name">Brand Audit</div>
+    <div class="skill-cmd">/brand-audit</div>
+    <div class="skill-desc">Scans a business's full online presence — website, socials, page speed, AI findability. Generates a published HTML report with a Vercel URL. Built for the Visible brand audit service.</div>
+    <div style="margin-top:12px;">
+      <a href="https://github.com/b1rdmania/brand-audit" target="_blank" style="font-size:13px;color:var(--claw-green-light);text-decoration:none;">github.com/b1rdmania/brand-audit →</a>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Animation Design</div>
+    <div class="skill-cmd">/animation-design</div>
+    <div class="skill-desc">Finds and embeds brand-coherent animations. Routes to Lottie for decorative motion, Rive for interactive components. Reads your design tokens automatically.</div>
+    <div style="margin-top:12px;">
+      <a href="https://github.com/b1rdmania/claude-lottie-skill" target="_blank" style="font-size:13px;color:var(--claw-green-light);text-decoration:none;">github.com/b1rdmania/claude-lottie-skill →</a>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Frontend Design</div>
+    <div class="skill-cmd">/frontend-design</div>
+    <div class="skill-desc">Builds production-grade frontend interfaces. Avoids generic AI aesthetics. Reads your brand context from DESIGN.md, CSS variables, or Tailwind config before generating anything.</div>
+    <div style="margin-top:12px;">
+      <span style="font-size:13px;color:var(--text-muted);">Built in — ships with Claude Code</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Variant Workflow</div>
+    <div class="skill-cmd">/variant-workflow</div>
+    <div class="skill-desc">Converts Variant.com exports to pixel-perfect React without the AI "cleaning up" your design. Copies styles exactly — class → className, nothing else changes.</div>
+    <div style="margin-top:12px;">
+      <a href="https://github.com/ziggythebot/variant-workflow" target="_blank" style="font-size:13px;color:var(--claw-green-light);text-decoration:none;">github.com/ziggythebot/variant-workflow →</a>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Claude API</div>
+    <div class="skill-cmd">/claude-api</div>
+    <div class="skill-desc">Build apps with the Anthropic SDK and Claude API. Triggers automatically when code imports anthropic or @anthropic-ai/sdk. Fetches live docs via Context7 before writing a line.</div>
+    <div style="margin-top:12px;">
+      <span style="font-size:13px;color:var(--text-muted);">Built in — ships with Claude Code</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-name">Namecheap MCP</div>
+    <div class="skill-cmd">MCP server</div>
+    <div class="skill-desc">Domain availability search directly in Claude Code. Check and compare 600+ TLDs without leaving your session. Includes affiliate-tracked purchase links.</div>
+    <div style="margin-top:12px;">
+      <a href="https://github.com/ziggythebot/namecheap-mcp" target="_blank" style="font-size:13px;color:var(--claw-green-light);text-decoration:none;">github.com/ziggythebot/namecheap-mcp →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>MIT licensed. Built by <a href="https://github.com/b1rdmania" target="_blank">b1rdmania</a>. Forked from <a href="https://github.com/qwibitai/nanoclaw" target="_blank">NanoClaw</a> by <a href="https://github.com/qwibitai" target="_blank">qwibitai</a>. Inspired by <a href="https://github.com/OpenInterpreter/open-interpreter" target="_blank">OpenClaw</a>. &nbsp;·&nbsp; <a href="brand.html">Brand Kit</a></p>
+</footer>
+
+</body>
+</html>
