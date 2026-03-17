@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup — GhostClaw</title>
+<meta name="description" content="How to install and configure GhostClaw. Node.js, Claude Code, Telegram bot, 10 minutes.">
+<meta name="theme-color" content="#0e0e1a">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ghostclaw.io/setup.html">
+<meta property="og:title" content="Setup — GhostClaw">
+<meta property="og:description" content="How to install and configure GhostClaw. Node.js, Claude Code, Telegram bot, 10 minutes.">
+<meta property="og:image" content="https://ghostclaw.io/og-image.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #0e0e1a;
+    --bg-surface: #1b1b2b;
+    --bg-elevated: #26263a;
+    --bg-hover: #32324a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6a6a82;
+    --claw-green: #22c55e;
+    --claw-green-light: #4ade80;
+    --claw-green-glow: rgba(34, 197, 94, 0.12);
+    --fn-warning: #f59e0b;
+    --border: #2a2a3e;
+    --border-light: #3a3a52;
+    --font: 'Fredoka', sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+  }
+
+  html { scroll-behavior: smooth; background-color: #0e0e1a; }
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14, 14, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-brand img { height: 32px; }
+  .nav-brand span { font-size: 20px; font-weight: 700; }
+  .nav-brand .ghost { color: white; }
+  .nav-brand .claw { color: var(--claw-green); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-links a.active { color: var(--claw-green-light); }
+  .nav-gh {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary) !important;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+  }
+  .nav-gh svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* PAGE */
+  .page-header {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 24px 3rem;
+  }
+  .page-header h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .page-header p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 6rem;
+  }
+
+  /* STEPS */
+  .step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+  .step-num {
+    font-size: clamp(3.5rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--bg-surface);
+    text-align: right;
+    user-select: none;
+  }
+  .step-body h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step-body h2 .dot { color: var(--claw-green); }
+  .step-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .step-body p:last-child { margin-bottom: 0; }
+
+  /* TERMINAL */
+  .terminal {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r { background: #ef4444; }
+  .terminal-dot.y { background: #f59e0b; }
+  .terminal-dot.g { background: #22c55e; }
+  .terminal-title { font-size: 12px; color: var(--text-muted); margin-left: 8px; }
+  .terminal-body {
+    padding: 16px 20px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .terminal-body .prompt { color: var(--text-muted); }
+  .terminal-body .cmd { color: var(--claw-green); }
+  .terminal-body .arg { color: var(--text-secondary); }
+  .terminal-body .comment { color: var(--text-muted); }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--bg-surface);
+    border-left: 3px solid var(--claw-green);
+    border-radius: var(--radius-md);
+    padding: 14px 20px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .callout .tag { font-weight: 600; color: var(--claw-green); margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .callout p { color: var(--text-secondary); line-height: 1.6; margin: 0; }
+  .callout a { color: var(--claw-green-light); text-decoration: none; }
+  .callout code {
+    background: var(--bg-elevated);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', monospace;
+    font-size: 12px;
+    color: var(--claw-green-light);
+  }
+
+  .callout-warn {
+    background: rgba(245, 158, 11, 0.08);
+    border-left-color: var(--fn-warning);
+  }
+  .callout-warn .tag { color: var(--fn-warning); }
+  .callout-warn p { color: var(--text-secondary); }
+
+  /* REQS */
+  .reqs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .req-pill {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+
+  /* OPTIONAL GRID */
+  .optional-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .optional-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+  }
+  .optional-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .optional-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+  .optional-card a { font-size: 13px; color: var(--claw-green-light); text-decoration: none; }
+
+  /* GHOST MOMENT */
+  .ghost-moment {
+    text-align: center;
+    padding: 3rem 0;
+  }
+  .ghost-moment p {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+  footer a { color: var(--text-secondary); text-decoration: none; }
+  footer a:hover { color: var(--text-primary); }
+
+  @media (max-width: 768px) {
+    .nav-links a:not(.nav-gh) { display: none; }
+    .step { grid-template-columns: 1fr; gap: 0.5rem; }
+    .step-num { font-size: 2rem; text-align: left; }
+    .optional-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw">
+      <span><span class="ghost">Ghost</span><span class="claw">Claw</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="why.html">Why GhostClaw</a>
+      <a href="skills.html">Skills</a>
+      <a href="setup.html" class="active">Setup</a>
+      <a href="https://t.me/+8qJbqxzBQAZkYTNk" target="_blank" style="display:inline-flex;align-items:center;gap:4px;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Community
+      </a>
+      <a href="https://github.com/b1rdmania/ghostclaw" class="nav-gh" target="_blank">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Setup<span style="color:var(--claw-green)">.</span></h1>
+  <p>From zero to a running agent. Takes about 10 minutes if you have a Telegram account and a Claude subscription.</p>
+  <div class="reqs" style="margin-top:24px;">
+    <span class="req-pill">Node.js 20+</span>
+    <span class="req-pill">Claude Code</span>
+    <span class="req-pill">macOS or Linux</span>
+    <span class="req-pill">Claude Max or API Keys</span>
+    <span class="req-pill">Telegram account</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h2>Get Node.js<span class="dot">.</span></h2>
+      <p>Open Terminal. Check if you already have it:</p>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <div class="terminal-body">
+          <span class="prompt">$</span> <span class="cmd">node</span> <span class="arg">--version</span>
+        </div>
+      </div>
+      <p>If you see <code style="font-family:monospace;font-size:13px;background:var(--bg-elevated);padding:2px 6px;border-radius:4px;color:var(--claw-green-light);">v20</code> or higher, skip to step 2. If not, download the LTS version from <a href="https://nodejs.org" target="_blank" style="color:var(--claw-green-light);">nodejs.org</a>, install it, restart Terminal.</p>
+      <p style="color:var(--text-muted);font-size:14px;">On Mac: press <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;">Cmd + Space</code>, type "Terminal", hit enter to open it.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h2>Install Claude Code<span class="dot">.</span></h2>
+      <p>Claude Code is the CLI that runs the agent. One command:</p>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <div class="terminal-body">
+          <span class="prompt">$</span> <span class="cmd">npm install -g</span> <span class="arg">@anthropic-ai/claude-code</span>
+        </div>
+      </div>
+      <p>You'll need a <a href="https://claude.ai" target="_blank" style="color:var(--claw-green-light);">Claude account</a> — Max plan works, or use API keys if you have them. When you first run <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">claude</code> it will walk you through auth.</p>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h2>Get a Telegram Bot<span class="dot">.</span></h2>
+      <p>You need a bot token before setup. Open Telegram and message <a href="https://t.me/BotFather" target="_blank" style="color:var(--claw-green-light);">@BotFather</a>:</p>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span class="terminal-title">Telegram — @BotFather</span>
+        </div>
+        <div class="terminal-body">
+          <span class="prompt">></span> <span class="arg">/newbot</span><br>
+          <span class="comment"># follow the prompts, pick a name and username</span><br>
+          <span class="comment"># BotFather gives you a token like:</span><br>
+          <span class="comment"># 1234567890:ABCdef...</span><br>
+          <span class="comment"># copy that, you'll need it in a moment</span>
+        </div>
+      </div>
+      <div class="callout">
+        <div class="tag">Tip</div>
+        <p>Give the bot a username ending in <code>bot</code> — that's Telegram's requirement. Something like <code>myghost_bot</code> or <code>workagent_bot</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h2>Clone and Run<span class="dot">.</span></h2>
+      <p>Clone the repo, install dependencies, and hand it to Claude. It reads the setup instructions automatically.</p>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <div class="terminal-body">
+          <span class="prompt">$</span> <span class="cmd">git clone</span> <span class="arg">https://github.com/b1rdmania/ghostclaw.git</span><br>
+          <span class="prompt">$</span> <span class="cmd">cd</span> <span class="arg">ghostclaw</span><br>
+          <span class="prompt">$</span> <span class="cmd">npm install</span><br>
+          <span class="prompt">$</span> <span class="cmd">claude</span>
+        </div>
+      </div>
+      <p>Claude reads the project and knows what to do. It'll run <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">/setup-ghostclaw</code> and ask you a series of questions — your bot token, your Telegram user ID, your timezone, personality preferences. Just answer them.</p>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h2>Start the Agent<span class="dot">.</span></h2>
+      <p>Once setup is done, start GhostClaw:</p>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <div class="terminal-body">
+          <span class="prompt">$</span> <span class="cmd">npm start</span>
+        </div>
+      </div>
+      <p>Then open Telegram, find your bot, and say hello. Mission Control is at <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">localhost:3333</code> in your browser.</p>
+      <div class="callout">
+        <div class="tag">Keep it running</div>
+        <p>GhostClaw needs to stay running to respond. On a dedicated machine, use <code>pm2 start npm -- start</code> to keep it alive after reboots. On your daily driver, just leave the terminal open.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="ghost-moment">
+    <p>it's awake now.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- OPTIONAL EXTRAS -->
+  <div>
+    <h2 style="font-size:22px;font-weight:700;margin-bottom:8px;">Optional Extras</h2>
+    <p style="font-size:15px;color:var(--text-secondary);margin-bottom:20px;">Not required. But useful if you want to deploy things or manage code from the agent.</p>
+    <div class="optional-grid">
+      <div class="optional-card">
+        <h4>GitHub CLI</h4>
+        <p>Lets GhostClaw open PRs, manage issues, and interact with repos on your behalf.</p>
+        <a href="https://cli.github.com" target="_blank">cli.github.com →</a>
+      </div>
+      <div class="optional-card">
+        <h4>Vercel CLI</h4>
+        <p>Lets GhostClaw deploy sites directly. Needed for the brand-audit skill and frontend deploy workflows.</p>
+        <a href="https://vercel.com/docs/cli" target="_blank">vercel.com/docs/cli →</a>
+      </div>
+      <div class="optional-card">
+        <h4>Perplexity API Key</h4>
+        <p>Powers the web research skill. Without it, web search falls back to a slower path. Worth having.</p>
+        <a href="https://www.perplexity.ai/settings/api" target="_blank">perplexity.ai/settings/api →</a>
+      </div>
+      <div class="optional-card">
+        <h4>ElevenLabs API Key</h4>
+        <p>Required for voice transcription and voice reply add-ons. Not needed for text-only setups.</p>
+        <a href="https://elevenlabs.io" target="_blank">elevenlabs.io →</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FAQ -->
+  <div>
+    <h2 style="font-size:22px;font-weight:700;margin-bottom:24px;">Common Questions</h2>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:600;margin-bottom:6px;">Do I need a dedicated machine?</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">No, but it helps. GhostClaw runs fine on your daily driver — just leave the terminal open. For always-on operation, a Mac Mini, old laptop, or cheap VPS (4GB RAM is plenty) works well.</p>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:600;margin-bottom:6px;">What does "bare metal" actually mean?</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">No Docker, no containers, no cloud functions. It's a single Node.js process running directly on your machine with full filesystem access. That's intentional — it's faster, simpler, and you know exactly what it can touch.</p>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:600;margin-bottom:6px;">Can I run it on Windows?</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">macOS and Linux are officially supported. Windows via WSL2 works for most people but isn't tested. If you hit issues, the <a href="https://t.me/+8qJbqxzBQAZkYTNk" target="_blank" style="color:var(--claw-green-light);">community</a> can usually help.</p>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:600;margin-bottom:6px;">How do I update GhostClaw?</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">Pull from GitHub and restart. If you have the <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:12px;font-family:monospace;">/add-update-check</code> skill installed, it'll notify you on Telegram when there's a new release.</p>
+      <div class="terminal" style="margin-top:12px;">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span class="terminal-title">Terminal — inside ghostclaw/</span>
+        </div>
+        <div class="terminal-body">
+          <span class="prompt">$</span> <span class="cmd">git pull</span><br>
+          <span class="prompt">$</span> <span class="cmd">npm install</span><br>
+          <span class="prompt">$</span> <span class="cmd">npm start</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:16px;font-weight:600;margin-bottom:6px;">Something broke. Where do I get help?</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;">Open a <a href="https://github.com/b1rdmania/ghostclaw/issues" target="_blank" style="color:var(--claw-green-light);">GitHub issue</a> with what you ran, what you expected, and what happened. Or join the <a href="https://t.me/+8qJbqxzBQAZkYTNk" target="_blank" style="color:var(--claw-green-light);">Telegram community</a> — someone's usually around.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>MIT licensed. Built by <a href="https://github.com/b1rdmania" target="_blank">b1rdmania</a>. Forked from <a href="https://github.com/qwibitai/nanoclaw" target="_blank">NanoClaw</a> by <a href="https://github.com/qwibitai" target="_blank">qwibitai</a>. Inspired by <a href="https://github.com/OpenInterpreter/open-interpreter" target="_blank">OpenClaw</a>. &nbsp;·&nbsp; <a href="brand.html">Brand Kit</a></p>
+</footer>
+
+</body>
+</html>
