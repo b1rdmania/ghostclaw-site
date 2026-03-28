@@ -280,6 +280,62 @@
     line-height: 1.5;
   }
 
+  /* === SKILLS === */
+  .skills {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 24px;
+  }
+  .skills h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .skills-sub {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 2rem;
+  }
+  .skill-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+  }
+  .skill-card code {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--claw-green-light);
+  }
+  .skill-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .skills-note {
+    text-align: center;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .skills-note a {
+    color: var(--claw-green-light);
+    text-decoration: none;
+  }
+  .skills-note a:hover { text-decoration: underline; }
+
   /* === QUICKSTART === */
   .quickstart {
     max-width: 1100px;
@@ -378,7 +434,7 @@
   /* === RESPONSIVE === */
   @media (max-width: 768px) {
     .nav-links a:not(.nav-gh) { display: none; }
-    .fork-cards, .features-grid { grid-template-columns: 1fr; }
+    .fork-cards, .features-grid, .skills-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 480px) {
     .hero-buttons { flex-direction: column; align-items: center; }
@@ -396,6 +452,7 @@
       <span><span class="ghost">Ghost</span><span class="claw">Claw</span></span>
     </a>
     <div class="nav-links">
+      <a href="#skills">Skills</a>
       <a href="#quickstart">Setup</a>
       <a href="https://t.me/+8qJbqxzBQAZkYTNk" target="_blank">Community</a>
       <a href="https://github.com/b1rdmania/ghostclaw" class="nav-gh" target="_blank">
@@ -418,7 +475,7 @@
   </p>
   <div class="hero-meta">
     <span class="hero-badge">Open Source &middot; MIT</span>
-    <span class="hero-badge">449 tests passing &middot; Active community</span>
+    <span class="hero-badge">449 tests passing &middot; MIT licence</span>
   </div>
   <div class="hero-buttons">
     <a href="https://github.com/b1rdmania/ghostclaw" class="btn btn-primary" target="_blank">
@@ -483,7 +540,50 @@
   </div>
 </section>
 
-<!-- 4. QUICK START -->
+<!-- 4. SKILLS -->
+<section class="skills" id="skills">
+  <h2>Infinitely Customisable</h2>
+  <p class="skills-sub">Add capabilities by typing a command. Each skill is a markdown file — no code changes, no config files, no rebuilds. Just tell Claude what you want.</p>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <code>/add-gmail-agent</code>
+      <p>Read, search, and send email via Gmail. OAuth setup included.</p>
+    </div>
+    <div class="skill-card">
+      <code>/add-voice-transcription</code>
+      <p>Transcribe voice notes automatically. ElevenLabs Scribe.</p>
+    </div>
+    <div class="skill-card">
+      <code>/add-voice-reply</code>
+      <p>Reply to voice notes with voice. ElevenLabs TTS.</p>
+    </div>
+    <div class="skill-card">
+      <code>/add-morning-briefing</code>
+      <p>Scheduled daily or weekly summaries. You set the prompt.</p>
+    </div>
+    <div class="skill-card">
+      <code>/add-heartbeat</code>
+      <p>Periodic health checks. Only alerts you when something needs attention.</p>
+    </div>
+    <div class="skill-card">
+      <code>/add-telegram-swarm</code>
+      <p>Multi-agent teams. Each agent gets its own bot identity in a group.</p>
+    </div>
+    <div class="skill-card">
+      <code>/pr-babysitter</code>
+      <p>Monitors PRs for failing CI and unanswered reviews. Fixes what it can.</p>
+    </div>
+    <div class="skill-card">
+      <code>/run-ralph</code>
+      <p>Autonomous overnight task loop. Commits after each task, messages progress.</p>
+    </div>
+  </div>
+
+  <p class="skills-note">These are just the built-in ones. Skills are markdown files — write your own or ask Claude to build one for you. <a href="https://github.com/b1rdmania/ghostclaw" target="_blank">See all skills on GitHub →</a></p>
+</section>
+
+<!-- 5. QUICK START -->
 <section class="quickstart" id="quickstart">
   <h2>Quick Start</h2>
   <div class="terminal">
