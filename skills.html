@@ -77,6 +77,8 @@
 
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 1rem; }
   .skill-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; }
+  .skill-card a { text-decoration: none; }
+  .skill-card a:hover code { text-decoration: underline; }
   .skill-card code { font-size: 14px; font-weight: 600; color: var(--claw-green-light); }
   .skill-card p { font-size: 14px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
   .skill-card .tag { display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px; border-radius: var(--radius-full); margin-bottom: 8px; }
@@ -137,18 +139,18 @@
   <h2>Agent Skills</h2>
   <p class="section-sub">Built-in add-ons. Type the command in Claude and it wires everything up.</p>
   <div class="skills-grid">
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-gmail-agent</code><p>Read, search, and send email via Gmail. OAuth setup included.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-voice-transcription</code><p>Transcribe voice notes automatically via ElevenLabs Scribe.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-voice-reply</code><p>Reply to voice notes with voice. ElevenLabs TTS.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-morning-briefing</code><p>Scheduled daily or weekly summaries delivered to your chat.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-heartbeat</code><p>Periodic health checks. Only alerts you when something needs attention.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-telegram-swarm</code><p>Multi-agent teams. Each agent gets its own bot identity in a group.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/pr-babysitter</code><p>Monitors PRs for failing CI and unanswered reviews. Fixes what it can.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/run-ralph</code><p>Autonomous overnight task loop. Works through a checklist, commits after each.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-slack</code><p>Add Slack as a channel. Socket Mode — no public URL needed.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-discord</code><p>Add Discord as a channel alongside or instead of Telegram.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/add-update-check</code><p>Monthly check for new GhostClaw versions. Notifies you, never auto-updates.</p></div>
-    <div class="skill-card"><span class="tag tag-core">Core</span><code>/update-ghostclaw</code><p>Safe update with backup and rollback. Pull, migrate, rebuild, restart.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-gmail-agent" target="_blank"><code>/add-gmail-agent</code></a><p>Read, search, and send email via Gmail. OAuth setup included.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-voice-transcription" target="_blank"><code>/add-voice-transcription</code></a><p>Transcribe voice notes automatically via ElevenLabs Scribe.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-voice-reply" target="_blank"><code>/add-voice-reply</code></a><p>Reply to voice notes with voice. ElevenLabs TTS.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-morning-briefing" target="_blank"><code>/add-morning-briefing</code></a><p>Scheduled daily or weekly summaries delivered to your chat.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-heartbeat" target="_blank"><code>/add-heartbeat</code></a><p>Periodic health checks. Only alerts you when something needs attention.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-telegram-swarm" target="_blank"><code>/add-telegram-swarm</code></a><p>Multi-agent teams. Each agent gets its own bot identity in a group.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/pr-babysitter" target="_blank"><code>/pr-babysitter</code></a><p>Monitors PRs for failing CI and unanswered reviews. Fixes what it can.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/run-ralph" target="_blank"><code>/run-ralph</code></a><p>Autonomous overnight task loop. Works through a checklist, commits after each.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-slack" target="_blank"><code>/add-slack</code></a><p>Add Slack as a channel. Socket Mode — no public URL needed.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-discord" target="_blank"><code>/add-discord</code></a><p>Add Discord as a channel alongside or instead of Telegram.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/add-update-check" target="_blank"><code>/add-update-check</code></a><p>Monthly check for new GhostClaw versions. Notifies you, never auto-updates.</p></div>
+    <div class="skill-card"><span class="tag tag-core">Core</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/agent/update-ghostclaw" target="_blank"><code>/update-ghostclaw</code></a><p>Safe update with backup and rollback. Pull, migrate, rebuild, restart.</p></div>
   </div>
 </div>
 
@@ -157,21 +159,21 @@
   <h2>Marketing &amp; Growth</h2>
   <p class="section-sub">A full marketing toolkit we've been building as Claude Code skills. Install into your GhostClaw or use standalone.</p>
   <div class="skills-grid">
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/page-cro</code><p>Conversion rate audit for any page. Actionable fixes, not generic advice.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/copywriting</code><p>Write or rewrite marketing copy — homepages, landing pages, CTAs.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/seo-audit</code><p>Technical and on-page SEO audit. Meta tags, structure, indexing.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/content-strategy</code><p>Plan what content to create, topic clusters, editorial calendar.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/competitor-alternatives</code><p>Create comparison and alternative pages for SEO and sales.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/email-sequence</code><p>Drip campaigns, onboarding flows, nurture sequences.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/cold-email</code><p>B2B cold outreach. Subject lines, follow-ups, personalization.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/launch-strategy</code><p>Product Hunt, beta launches, go-to-market planning.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/pricing-strategy</code><p>Pricing tiers, packaging, freemium vs trial decisions.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/social-content</code><p>LinkedIn, Twitter/X, Instagram content. Scheduling, repurposing.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/ad-creative</code><p>Generate ad copy at scale. Headlines, descriptions, variations.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/site-architecture</code><p>Plan page hierarchy, navigation, URL structure, internal linking.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/programmatic-seo</code><p>Build SEO pages at scale with templates and data.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/signup-flow-cro</code><p>Optimise signup, registration, and trial activation flows.</p></div>
-    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><code>/referral-program</code><p>Design referral programs, affiliate structures, viral loops.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/page-cro" target="_blank"><code>/page-cro</code></a><p>Conversion rate audit for any page. Actionable fixes, not generic advice.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/copywriting" target="_blank"><code>/copywriting</code></a><p>Write or rewrite marketing copy — homepages, landing pages, CTAs.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/seo-audit" target="_blank"><code>/seo-audit</code></a><p>Technical and on-page SEO audit. Meta tags, structure, indexing.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/content-strategy" target="_blank"><code>/content-strategy</code></a><p>Plan what content to create, topic clusters, editorial calendar.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/competitor-alternatives" target="_blank"><code>/competitor-alternatives</code></a><p>Create comparison and alternative pages for SEO and sales.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/email-sequence" target="_blank"><code>/email-sequence</code></a><p>Drip campaigns, onboarding flows, nurture sequences.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/cold-email" target="_blank"><code>/cold-email</code></a><p>B2B cold outreach. Subject lines, follow-ups, personalization.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/launch-strategy" target="_blank"><code>/launch-strategy</code></a><p>Product Hunt, beta launches, go-to-market planning.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/pricing-strategy" target="_blank"><code>/pricing-strategy</code></a><p>Pricing tiers, packaging, freemium vs trial decisions.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/social-content" target="_blank"><code>/social-content</code></a><p>LinkedIn, Twitter/X, Instagram content. Scheduling, repurposing.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/ad-creative" target="_blank"><code>/ad-creative</code></a><p>Generate ad copy at scale. Headlines, descriptions, variations.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/site-architecture" target="_blank"><code>/site-architecture</code></a><p>Plan page hierarchy, navigation, URL structure, internal linking.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/programmatic-seo" target="_blank"><code>/programmatic-seo</code></a><p>Build SEO pages at scale with templates and data.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/signup-flow-cro" target="_blank"><code>/signup-flow-cro</code></a><p>Optimise signup, registration, and trial activation flows.</p></div>
+    <div class="skill-card"><span class="tag tag-marketing">Marketing</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/marketing/referral-program" target="_blank"><code>/referral-program</code></a><p>Design referral programs, affiliate structures, viral loops.</p></div>
   </div>
 </div>
 
@@ -180,12 +182,12 @@
   <h2>Design &amp; Build</h2>
   <p class="section-sub">Design system tools and structured data. Use standalone or inside GhostClaw.</p>
   <div class="skills-grid">
-    <div class="skill-card"><span class="tag tag-design">Design</span><code>/design</code><p>Full design system framework. Brand context, component generation, best practices.</p></div>
-    <div class="skill-card"><span class="tag tag-design">Design</span><code>/schema-markup</code><p>Add structured data for rich snippets. JSON-LD, FAQ schema, product schema.</p></div>
-    <div class="skill-card"><span class="tag tag-design">Design</span><code>/ai-seo</code><p>Optimise content for AI search engines. Get cited by ChatGPT, Perplexity, Claude.</p></div>
-    <div class="skill-card"><span class="tag tag-design">Design</span><code>/analytics-tracking</code><p>Set up GA4, event tracking, UTM parameters, conversion tracking.</p></div>
-    <div class="skill-card"><span class="tag tag-design">Design</span><code>/ab-test-setup</code><p>Plan and implement A/B tests. Hypothesis, variants, statistical significance.</p></div>
-    <div class="skill-card"><span class="tag tag-design">Design</span><code>/domain-check</code><p>Check domain availability across 600+ TLDs via Namecheap.</p></div>
+    <div class="skill-card"><span class="tag tag-design">Design</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/design/design" target="_blank"><code>/design</code></a><p>Full design system framework. Brand context, component generation, best practices.</p></div>
+    <div class="skill-card"><span class="tag tag-design">Design</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/design/schema-markup" target="_blank"><code>/schema-markup</code></a><p>Add structured data for rich snippets. JSON-LD, FAQ schema, product schema.</p></div>
+    <div class="skill-card"><span class="tag tag-design">Design</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/design/ai-seo" target="_blank"><code>/ai-seo</code></a><p>Optimise content for AI search engines. Get cited by ChatGPT, Perplexity, Claude.</p></div>
+    <div class="skill-card"><span class="tag tag-design">Design</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/design/analytics-tracking" target="_blank"><code>/analytics-tracking</code></a><p>Set up GA4, event tracking, UTM parameters, conversion tracking.</p></div>
+    <div class="skill-card"><span class="tag tag-design">Design</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/design/ab-test-setup" target="_blank"><code>/ab-test-setup</code></a><p>Plan and implement A/B tests. Hypothesis, variants, statistical significance.</p></div>
+    <div class="skill-card"><span class="tag tag-design">Design</span><a href="https://github.com/b1rdmania/ghostclaw-skills/tree/main/design/domain-check" target="_blank"><code>/domain-check</code></a><p>Check domain availability across 600+ TLDs via Namecheap.</p></div>
   </div>
 </div>
 
