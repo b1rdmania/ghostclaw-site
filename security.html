@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security &amp; Trust — GhostClaw</title>
+<meta name="description" content="How GhostClaw handles security. Skill scanning, filesystem isolation, secrets management, and honest trade-offs.">
+<meta name="theme-color" content="#0e0e1a">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ghostclaw.io/security.html">
+<meta property="og:title" content="Security & Trust — GhostClaw">
+<meta property="og:description" content="How GhostClaw handles security. Skill scanning, filesystem isolation, secrets management, and honest trade-offs.">
+<meta property="og:image" content="https://ghostclaw.io/og-image.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #0e0e1a;
+    --bg-surface: #1b1b2b;
+    --bg-elevated: #26263a;
+    --bg-hover: #32324a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6a6a82;
+    --claw-green: #22c55e;
+    --claw-green-light: #4ade80;
+    --claw-green-glow: rgba(34, 197, 94, 0.12);
+    --fn-warning: #f59e0b;
+    --fn-critical: #ef4444;
+    --border: #2a2a3e;
+    --border-light: #3a3a52;
+    --font: 'Fredoka', sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+  }
+
+  html { scroll-behavior: smooth; background-color: #0e0e1a; }
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14, 14, 26, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-brand img { height: 32px; }
+  .nav-brand span { font-size: 20px; font-weight: 700; }
+  .nav-brand .ghost { color: white; }
+  .nav-brand .claw { color: var(--claw-green); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-links a.active { color: var(--claw-green-light); }
+  .nav-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-primary) !important; background: var(--bg-elevated); border: 1px solid var(--border-light); padding: 6px 14px; border-radius: var(--radius-full); }
+  .nav-gh svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* PAGE HEADER */
+  .page-header { max-width: 1100px; margin: 0 auto; padding: 4rem 24px 2rem; text-align: center; }
+  .page-header h1 { font-size: 48px; font-weight: 700; margin-bottom: 12px; }
+  .page-header p { font-size: 18px; color: var(--text-secondary); max-width: 650px; margin: 0 auto; line-height: 1.7; }
+
+  /* SECTIONS */
+  .section { max-width: 900px; margin: 0 auto; padding: 2.5rem 24px; }
+  .section h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  .section p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* SEVERITY TABLE */
+  .severity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+  .severity-card {
+    background: var(--bg-surface);
+    padding: 24px;
+  }
+  .severity-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .severity-card.critical h3 { color: var(--fn-critical); }
+  .severity-card.warning h3 { color: var(--fn-warning); }
+  .severity-card.info h3 { color: var(--text-secondary); }
+  .severity-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .severity-card li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 3px 0;
+    line-height: 1.5;
+  }
+  .severity-card li::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .severity-card.critical li::before { background: var(--fn-critical); }
+  .severity-card.warning li::before { background: var(--fn-warning); }
+  .severity-card.info li::before { background: var(--text-muted); }
+
+  /* VERDICT BOX */
+  .verdict-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--claw-green);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin: 1.5rem 0;
+  }
+  .verdict-box p { margin-bottom: 0.5rem; }
+  .verdict-box strong { color: var(--text-primary); }
+
+  /* FEATURE CARDS for isolation/secrets/etc */
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 1.5rem 0;
+  }
+  .trust-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+  }
+  .trust-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .trust-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0; }
+
+  /* HONEST BOX */
+  .honest-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--fn-warning);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin: 1.5rem 0;
+  }
+  .honest-box h3 { font-size: 18px; font-weight: 600; color: var(--fn-warning); margin-bottom: 10px; }
+  .honest-box p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.8rem; }
+  .honest-box p:last-child { margin-bottom: 0; }
+
+  /* CODE */
+  code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    background: var(--bg-elevated);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--claw-green-light);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  footer p { font-size: 13px; color: var(--text-muted); }
+  footer a { color: var(--text-secondary); text-decoration: none; }
+  footer a:hover { color: var(--text-primary); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links a:not(.nav-gh) { display: none; }
+    .severity-grid, .trust-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .page-header h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <img src="ghostclaw-mark-final.svg" alt="GhostClaw">
+      <span><span class="ghost">Ghost</span><span class="claw">Claw</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="why.html">Why GhostClaw</a>
+      <a href="skills.html">Skills</a>
+      <a href="setup.html">Setup</a>
+      <a href="security.html" class="active">Security</a>
+      <a href="https://t.me/+8qJbqxzBQAZkYTNk" target="_blank" style="display:inline-flex;align-items:center;gap:4px;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Community
+      </a>
+      <a href="https://github.com/b1rdmania/ghostclaw" class="nav-gh" target="_blank">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-header">
+  <h1>Security &amp; Trust<span style="color:var(--claw-green)">.</span></h1>
+  <p>GhostClaw runs on your machine with full OS access. No sandbox, no container. That means trust matters more than usual. Here is exactly how we handle it.</p>
+</div>
+
+<!-- HOW SKILLS ARE SCANNED -->
+<div class="section">
+  <h2>How Skills Are Scanned</h2>
+  <p>Every skill runs through an automated security scanner before installation. The scanner reads every code file in the skill package and checks each line against a pattern library. It also inspects the skill manifest for dangerous post-install commands, suspicious test scripts, and file operations targeting sensitive paths.</p>
+
+  <div class="severity-grid">
+    <div class="severity-card critical">
+      <h3>Critical — blocks install</h3>
+      <ul>
+        <li><code>exec()</code> / <code>execSync()</code> with string interpolation (command injection)</li>
+        <li><code>eval()</code> and <code>new Function()</code> (arbitrary code execution)</li>
+        <li><code>curl | sh</code> / <code>wget | sh</code> pipes (remote code execution)</li>
+        <li><code>process.env</code> near network calls (credential exfiltration)</li>
+        <li>Post-install commands that download and execute remote code</li>
+        <li><code>rm -rf</code> in post-install commands</li>
+        <li>File operations targeting <code>.ssh</code>, <code>.env</code>, or path traversal (<code>..</code>)</li>
+      </ul>
+    </div>
+    <div class="severity-card warning">
+      <h3>Warning — review before install</h3>
+      <ul>
+        <li>Writing or deleting files at absolute/home paths</li>
+        <li>Importing from remote URLs</li>
+        <li>References to <code>.ssh</code> directory</li>
+        <li>Possible hardcoded secrets or credentials</li>
+        <li>Any post-install shell commands</li>
+        <li>Test commands that download code</li>
+      </ul>
+    </div>
+    <div class="severity-card info">
+      <h3>Info — awareness only</h3>
+      <ul>
+        <li>File system write/delete operations</li>
+        <li>Hardcoded URLs in fetch calls</li>
+        <li>Child process spawning</li>
+        <li>Base64 decoding (potential obfuscation)</li>
+        <li>References to <code>.env</code> files</li>
+        <li>npm dependencies added</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verdict-box">
+    <p><strong>The verdict system:</strong> If any critical finding is detected, the skill is flagged <strong>REVIEW REQUIRED</strong> and installation is blocked until you manually inspect it. Warnings produce a <strong>CAUTION</strong> verdict — the skill installs but you see every flag. A clean scan with no criticals or warnings gives a <strong>CLEAN</strong> verdict.</p>
+  </div>
+
+  <p>The full scanner is open source: <a href="https://github.com/b1rdmania/ghostclaw/blob/main/skills-engine/security-scan.ts" target="_blank" style="color:var(--claw-green-light);text-decoration:none;">security-scan.ts</a> — 436 lines of pattern matching, manifest inspection, and verdict logic. No black boxes.</p>
+</div>
+
+<!-- ISOLATION & SECRETS -->
+<div class="section">
+  <h2>Built-in Protections</h2>
+
+  <div class="trust-grid">
+    <div class="trust-card">
+      <h3>Per-group filesystem isolation</h3>
+      <p>Each agent group gets its own directory under <code>groups/{name}/</code>. Memory, sessions, and working files are separated. Agents cannot read or write across group boundaries. Claude's config directory is set per-group via <code>CLAUDE_CONFIG_DIR</code>.</p>
+    </div>
+    <div class="trust-card">
+      <h3>Secrets management</h3>
+      <p>API keys and tokens live in <code>.env</code> with <code>chmod 600</code> permissions (owner-only read/write). The <code>.gitignore</code> blocks <code>.env</code> files from ever being committed. Secrets are passed as environment variables, never hardcoded in skill files.</p>
+    </div>
+    <div class="trust-card">
+      <h3>Open source — full audit</h3>
+      <p>Every line of GhostClaw is on GitHub under MIT licence. The security scanner, the agent runner, the skill engine — all readable. If you want to know exactly what runs on your machine, you can read it.</p>
+    </div>
+    <div class="trust-card">
+      <h3>Community skills: official vs third-party</h3>
+      <p>Official skills in <a href="https://github.com/b1rdmania/ghostclaw-skills" target="_blank" style="color:var(--claw-green-light);text-decoration:none;">ghostclaw-skills</a> are reviewed before merge. Community-contributed skills go through PR review. Third-party skills from unknown sources still get scanned, but you should read them yourself before installing.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HONEST TRADE-OFF -->
+<div class="section">
+  <h2>The Honest Trade-off</h2>
+
+  <div class="honest-box">
+    <h3>No containers. On purpose.</h3>
+    <p>GhostClaw deliberately removed Docker containers from NanoClaw. The agent runs directly on your OS with real shell access, real filesystem access, and real network access. That is what makes it useful — it can actually do things on your machine.</p>
+    <p>But it also means the agent has real power. A malicious skill could, in theory, do anything your user account can do. The security scanner catches known bad patterns, but it is not a sandbox. It is a lint check, not a jail.</p>
+    <p>This is the right trade-off for a personal agent on a dedicated machine. But it means:</p>
+    <p><strong>Review skills before installing them.</strong> Especially community or third-party skills from sources you do not know. Read the code. Check the scan report. If a skill has warnings, understand why before proceeding. The scanner gives you the information — the decision is yours.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>MIT licensed. Built by <a href="https://github.com/b1rdmania" target="_blank">b1rdmania</a>. Forked from <a href="https://github.com/qwibitai/nanoclaw" target="_blank">NanoClaw</a> by <a href="https://github.com/qwibitai" target="_blank">qwibitai</a>. &nbsp;&middot;&nbsp; <a href="brand.html">Brand Kit</a></p>
+</footer>
+
+</body>
+</html>
