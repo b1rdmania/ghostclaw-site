@@ -305,17 +305,38 @@
 <!-- PAGE HEADER -->
 <div class="page-header">
   <h1>Setup<span style="color:var(--claw-green)">.</span></h1>
-  <p>From zero to a running agent. Takes about 10 minutes if you have a Telegram account and a Claude subscription.</p>
+  <p>From zero to a running agent. One command if you're ready, or step-by-step below.</p>
   <div class="reqs" style="margin-top:24px;">
     <span class="req-pill">Node.js 20+</span>
-    <span class="req-pill">Claude Code</span>
+    <span class="req-pill">Anthropic API key</span>
     <span class="req-pill">macOS or Linux</span>
-    <span class="req-pill">Claude Max or API Keys</span>
     <span class="req-pill">Telegram account</span>
   </div>
 </div>
 
 <div class="content">
+
+  <!-- QUICK INSTALL -->
+  <div class="step">
+    <div class="step-num" style="background:var(--claw-green);color:var(--bg-deep);">&#9889;</div>
+    <div class="step-body">
+      <h2>One-Command Install<span class="dot">.</span></h2>
+      <p>Have Node.js, an <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--claw-green-light);">Anthropic API key</a>, and a Telegram account? Run this:</p>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <div class="terminal-body">
+          <span class="prompt">$</span> <span class="cmd">curl -fsSL</span> <span class="arg">https://ghostclaw.io/install.sh</span> <span class="cmd">| bash</span>
+        </div>
+      </div>
+      <p>The installer walks you through everything — API key, Telegram bot creation, personality, auto-start. Done in 5 minutes.</p>
+      <p style="color:var(--text-muted);font-size:14px;margin-top:8px;">Prefer to do it manually? Follow the steps below.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
 
   <!-- STEP 1 -->
   <div class="step">
@@ -352,7 +373,7 @@
           <span class="prompt">$</span> <span class="cmd">npm install -g</span> <span class="arg">@anthropic-ai/claude-code</span>
         </div>
       </div>
-      <p>You'll need a <a href="https://claude.ai" target="_blank" style="color:var(--claw-green-light);">Claude account</a> — Max plan works, or use API keys if you have them. When you first run <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">claude</code> it will walk you through auth.</p>
+      <p>You'll need an <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--claw-green-light);">Anthropic API key</a>. Set it as <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">ANTHROPIC_API_KEY</code> in your <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">.env</code> file. Claude subscriptions no longer cover third-party tools.</p>
     </div>
   </div>
 
@@ -422,7 +443,7 @@
       <p>Then open Telegram, find your bot, and say hello. Mission Control is at <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">localhost:3333</code> in your browser.</p>
       <div class="callout">
         <div class="tag">Keep it running</div>
-        <p>GhostClaw needs to stay running to respond. On a dedicated machine, use <code>pm2 start npm -- start</code> to keep it alive after reboots. On your daily driver, just leave the terminal open.</p>
+        <p>GhostClaw needs to stay running to respond. The installer can set up launchd (macOS) or systemd (Linux) to auto-start on boot. On your daily driver, just leave the terminal open.</p>
       </div>
     </div>
   </div>
