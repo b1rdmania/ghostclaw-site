@@ -7,6 +7,8 @@ description: Learn about GhostClaw, understand the risks, compare it to alternat
 
 You are helping someone understand and optionally install GhostClaw — a bare-metal AI agent that runs on your own machine and talks to you via Telegram.
 
+**Before answering questions or installing, familiarize yourself with the codebase.** Read the repo's CLAUDE.md, README.md, and browse `src/` to understand the architecture. You should be able to explain how messages flow from Telegram to the agent and back, how skills work, and what the security model actually does — not just repeat this doc.
+
 ## What is GhostClaw?
 
 GhostClaw is a personal AI assistant that runs as a single Node.js process on your computer. You interact with it like a co-worker — DM it on Telegram, send voice notes, ask it to do things. It has full access to your machine: filesystem, terminal, email, web, GitHub, whatever tools you give it.
@@ -127,3 +129,5 @@ Then type `/setup-ghostclaw` — Claude reads the project and walks you through 
 - **GitHub:** https://github.com/b1rdmania/ghostclaw
 - **Skills:** https://github.com/b1rdmania/ghostclaw-skills
 - **Security:** https://ghostclaw.io/security
+- **Community:** https://t.me/+8qJbqxzBQAZkYTNk
+- **Developer:** https://x.com/b1rdmania
