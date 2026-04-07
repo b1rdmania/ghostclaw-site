@@ -342,19 +342,22 @@
   <div class="step">
     <div class="step-num">1</div>
     <div class="step-body">
-      <h2>Get Node.js<span class="dot">.</span></h2>
-      <p>Open Terminal. Check if you already have it:</p>
+      <h2>Get Node.js &amp; Git<span class="dot">.</span></h2>
+      <p>First, open a terminal. On <strong>Mac</strong>: press <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;">Cmd + Space</code>, type "Terminal", hit enter. On <strong>Linux</strong>: <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;">Ctrl + Alt + T</code>.</p>
+      <p>Then check if you already have what you need:</p>
       <div class="terminal">
         <div class="terminal-bar">
           <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
           <span class="terminal-title">Terminal</span>
         </div>
         <div class="terminal-body">
-          <span class="prompt">$</span> <span class="cmd">node</span> <span class="arg">--version</span>
+          <span class="prompt">$</span> <span class="cmd">node</span> <span class="arg">--version</span><br>
+          <span class="prompt">$</span> <span class="cmd">git</span> <span class="arg">--version</span>
         </div>
       </div>
-      <p>If you see <code style="font-family:monospace;font-size:13px;background:var(--bg-elevated);padding:2px 6px;border-radius:4px;color:var(--claw-green-light);">v20</code> or higher, skip to step 2. If not, download the LTS version from <a href="https://nodejs.org" target="_blank" style="color:var(--claw-green-light);">nodejs.org</a>, install it, restart Terminal.</p>
-      <p style="color:var(--text-muted);font-size:14px;">On Mac: press <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;">Cmd + Space</code>, type "Terminal", hit enter to open it.</p>
+      <p>If both print a version number, you're good — skip to step 2.</p>
+      <p><strong>Missing Node.js?</strong> Download the LTS version from <a href="https://nodejs.org" target="_blank" style="color:var(--claw-green-light);">nodejs.org</a>, run the installer, then restart Terminal. You need v20 or higher.</p>
+      <p><strong>Missing Git?</strong> On Mac, just run <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">git --version</code> — it'll prompt you to install it automatically. On Linux: <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">sudo apt install git</code> (Ubuntu/Debian) or <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">sudo dnf install git</code> (Fedora).</p>
     </div>
   </div>
 
@@ -373,7 +376,10 @@
           <span class="prompt">$</span> <span class="cmd">npm install -g</span> <span class="arg">@anthropic-ai/claude-code</span>
         </div>
       </div>
-      <p>You'll need an <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--claw-green-light);">Anthropic API key</a>. Set it as <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">ANTHROPIC_API_KEY</code> in your <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">.env</code> file. Claude subscriptions no longer cover third-party tools.</p>
+      <div class="callout callout-warn" style="margin-top:4px;">
+        <div class="tag">Before this step — get an API key</div>
+        <p>GhostClaw runs on the <a href="https://console.anthropic.com/settings/keys" target="_blank">Anthropic API</a> — you need an account and a key. Go to <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>, create an account, add a card, and create an API key. It's pay-as-you-go: most people spend <strong>$5–20/month</strong> at normal usage. There's no free tier, but costs are predictable — a typical conversation costs a few cents. Once you have the key, the installer will ask for it and store it for you.</p>
+      </div>
     </div>
   </div>
 
@@ -440,7 +446,7 @@
           <span class="prompt">$</span> <span class="cmd">npm start</span>
         </div>
       </div>
-      <p>Then open Telegram, find your bot, and say hello. Mission Control is at <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">localhost:3333</code> in your browser.</p>
+      <p>Then open Telegram, find your bot, and say hello. GhostClaw also has a web dashboard — open <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace;">localhost:3333</code> in your browser (that means: open Chrome/Safari and type that into the address bar). It shows live status, message history, and running tasks.</p>
       <div class="callout">
         <div class="tag">Keep it running</div>
         <p>GhostClaw needs to stay running to respond. The installer can set up launchd (macOS) or systemd (Linux) to auto-start on boot. On your daily driver, just leave the terminal open.</p>
