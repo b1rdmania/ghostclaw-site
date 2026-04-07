@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ghostclaw.io/sitemap.xml
+Sitemap: https://www.ghostclaw.io/sitemap.xml
